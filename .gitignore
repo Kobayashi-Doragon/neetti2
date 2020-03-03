@@ -6,3 +6,6 @@ __pycache__/
 
 #venvを除去
 venv/
+
+#.gitを除去
+.git/
