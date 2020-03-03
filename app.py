@@ -24,7 +24,7 @@ def login():
     if player.login(id, password):
         player.update_data()
         return render_template("game.html", money=player.money, fatigue=player.mother_fatigue,
-                               time=player.time, foods=player.foods, buys=player.buys)
+                               time=player.time, foods=player.foods, buys=player.buys)#foodsとbuysを追加(これ以降全て)
     else:
         return render_template("login.html", message="ユーザIDもしくはパスワードが間違っています")
 
@@ -78,7 +78,7 @@ def talk():
 def feed():
     # feed
     food_id = request.args.get("food_id")
-    # result = player.feed(food_id)
+    # result = player.feed(food_id)　 #バグが出たので除去
     player.feed(food_id)
     result = "食事を与えた"
     if player.check_neet():
@@ -93,7 +93,7 @@ def feed():
 def buy():
     # buy
     buy_id = request.args.get("buy_id")
-    #result = player.buy(buy_id)
+    #result = player.buy(buy_id) #バグが出たので除去
     player.buy(buy_id)
     result="物を買ってあげた"
     if player.check_neet():

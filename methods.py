@@ -12,19 +12,19 @@ class player():
         self.neet_fulness = 0
         self.neet_motivation = 0
         self.time = "仕事前"
-        self.foods = []
-        self.buys = []
-        self.data_id = ['1', '3', '6', '8', '10']
+        self.foods = []#追加
+        self.buys = []#追加
+        self.data_id = ['1', '3', '6', '8', '10']#乱数表(追加)
         sql.connect(self)
 
-    # データベースの値を表示するために取得
+    # データベースの値を表示するために取得(追加したメソッド)
     def update_data(self):
-        for i in range(len(self.data_id)):
+        for i in range(len(self.data_id)):#データの読み込み
             check = "select food_name from food1 where food_id = '" + self.data_id[i] + "'"
-            self.foods.append(sql.query(self, check))
+            self.foods.append(sql.query(self, check))#foods(配列)にデータを追加
 
             check = "select buy_name from buy where buy_id = '" + self.data_id[i] + "'"
-            self.buys.append(sql.query(self, check))
+            self.buys.append(sql.query(self, check))#buys(配列)にデータを追加
 
     # 入力を元にログインしてゲーム画面に
     def login(self, id, password):
@@ -107,7 +107,8 @@ class player():
             self.money -= price
             self.neet_fulness += 100
             self.neet_motivation += result[3]
-            # return result[1] + "をあげた"
+            # return result[1] + "をあげた"　
+            #resultの表示でエラーが出たので、消去しました。
 
     # 物を買ってあげたとき
     # 選択されたアイテムとDBを照合しステータスを更新
@@ -124,6 +125,7 @@ class player():
             self.money -= price
             self.neet_motivation += result[3]
             # return result[1] + "をあげた"
+        # resultの表示でエラーが出たので、消去しました。
 
     # 仕事に行ったとき
     def work(self):
