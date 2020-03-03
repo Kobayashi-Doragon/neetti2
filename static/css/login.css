@@ -1,0 +1,259 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*:focus {
+  outline: none;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+
+.main-screen {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: calc( 100% - 2*50px);
+  height: calc(100% - 2*50px);
+  background-size: 100% 100%;
+  background-image: url("../image/background.jpg");
+  background-repeat: no-repeat;
+}
+@media (max-width: 480px) {
+  .main-screen {
+    top: 20px;
+    left: 20px;
+    width: calc( 100% - 2*20px);
+    height: calc(100% - 2*20px);
+  }
+}
+
+.title-message {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: 56px;
+  margin: 5px;
+}
+@media (max-width: 780px) {
+  .title-message {
+    font-size: 64px;
+  }
+}
+@media (max-width: 480px) {
+  .title-message {
+    display: none;
+  }
+}
+
+.title-message-sp {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 5px;
+  display: none;
+}
+@media (max-width: 480px) {
+  .title-message-sp {
+    display: block;
+  }
+}
+
+.login-form {
+  position: absolute;
+  top: 250px;
+  width: 50%;
+  text-align: center;
+  display: inline-block;
+}
+@media (max-width: 480px) {
+  .login-form {
+    top: 220px;
+  }
+}
+
+.register-form {
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  width: 50%;
+  text-align: center;
+  display: inline-block;
+}
+@media (max-width: 480px) {
+  .register-form {
+    top: 220px;
+  }
+}
+
+.id-form {
+  font-size: 30px;
+  width: 250px;
+  height: 40px;
+  padding-left: 10px;
+  box-shadow: 5px 3px 10px #444, 6px -1px 3px #666 inset;
+  color: white;
+  background-color: #aa8155;
+  border-top: none;
+  border-bottom: none;
+  border-right: solid 5px #d0b483;
+  border-left: solid 5px #d0b483;
+}
+.id-form ::placeholder {
+  color: white;
+}
+@media (max-width: 780px) {
+  .id-form {
+    font-size: 50px;
+    width: 300px;
+    height: 60px;
+  }
+}
+@media (max-width: 480px) {
+  .id-form {
+    font-size: 25px;
+    width: 130px;
+    height: 30px;
+  }
+}
+
+.pass-form {
+  font-size: 30px;
+  width: 250px;
+  height: 40px;
+  padding-left: 10px;
+  box-shadow: 5px 3px 10px #444, 6px 4px 8px #666 inset;
+  color: white;
+  background-color: #aa8155;
+  border: solid 5px #d0b483;
+}
+.pass-form ::placeholder {
+  color: white;
+}
+@media (max-width: 780px) {
+  .pass-form {
+    font-size: 50px;
+    width: 300px;
+    height: 60px;
+  }
+}
+@media (max-width: 480px) {
+  .pass-form {
+    font-size: 25px;
+    width: 130px;
+    height: 30px;
+  }
+}
+
+.submit-button {
+  margin-top: 40px;
+  width: 250px;
+  height: 55px;
+  cursor: pointer;
+  font-size: 40px;
+  border: outset 4px white;
+  box-shadow: 4px 4px 6px #444;
+}
+.submit-button:hover {
+  box-shadow: 3px 3px 6px #555;
+  transition: all 0.1s ease;
+  text-decoration: none;
+}
+.submit-button:active {
+  width: 246px;
+  height: 53px;
+  font-size: 39px;
+  background-position: 0% !important;
+  box-shadow: 0 0px 12px #BBB;
+  transition: all 0.2s ease;
+  transform: translateY(1px);
+}
+@media (max-width: 780px) {
+  .submit-button:active {
+    width: 298px;
+    height: 64px;
+    font-size: 44px;
+  }
+}
+@media (max-width: 480px) {
+  .submit-button:active {
+    width: 148px;
+    height: 39px;
+    font-size: 22px;
+  }
+}
+@media (max-width: 780px) {
+  .submit-button {
+    font-size: 45px;
+    width: 300px;
+    height: 65px;
+  }
+}
+@media (max-width: 480px) {
+  .submit-button {
+    font-size: 23px;
+    width: 150px;
+    height: 40px;
+  }
+}
+
+/*# sourceMappingURL=login.css.map */

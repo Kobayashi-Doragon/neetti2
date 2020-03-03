@@ -1,0 +1,8 @@
+#.ideaを除去
+.idea/
+
+#__pycache__を除去
+__pycache__/
+
+#venvを除去
+venv/
