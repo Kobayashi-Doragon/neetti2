@@ -26,6 +26,9 @@ $(function() {
      $('.buy-option').click(function () {
         $('#buy-button').show();
     })
+    $('.talk-option').click(function () {
+        $('#talk-button').show();
+    })
     $('#tutorial-delete').click(function () {
         $('.tutorial-box').hide();
     })

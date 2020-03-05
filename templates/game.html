@@ -97,9 +97,9 @@
     <!-- 行動選択後の選択肢-->
         <div class="action-select-box">
             <form action="/feed">
-                <select name="food_id" id="food-select" class="select-list" size="{{ foods|length }}"><!-- 行動選択後の選択肢-->
+                <select name="food_id" id="food-select" class="select-list" size="{{ foods|length }}">
                     {% for i in range(foods|length) %}
-                        <option value="{{ i }}" class="food-option">{{ foods[i].name }}({{ foods[i].price }}円)</option>
+                        <option value="{{ i }}" class="food-option">{{ foods[i]['name'] }}({{ foods[i]['price'] }}円)</option>
                     {% endfor %}
                 </select>
                 <input type="submit" value="食事を与える" class="submit-button" id="food-button">
@@ -107,7 +107,7 @@
             <form action="/buy">
                 <select name="buy_id" id="buy-select" class="select-list" size="{{ buys|length }}">
                    {% for i in range(buys|length) %}
-                        <option value="{{ i }}" class="buy-option">{{ buys[i].name }}({{buys[i].price}}円)}</option>
+                        <option value="{{ i }}" class="buy-option">{{ buys[i]['name'] }}({{buys[i]['price']}}円)}</option>
                    {% endfor %}
                 </select>
                 <input type="submit" value="購入" class="submit-button" id="buy-button">
@@ -115,9 +115,10 @@
             <form action="/talk">
                 <select name="talk_id" id="talk-select" class="select-list"  size="{{ talks|length }}">
                     {% for i in range(talks|length) %}
-                        <option value="{{ i }}" class="buy-option">{{ talks[i]}}</option>
+                        <option value="{{ i }}" class="talk-option">{{ }talks[i]}</option>
                    {% endfor %}
                 </select>
+            <input type="submit" value="話しかける" class="submit-button" id="talk-button">
             </form>
         </div>
 
