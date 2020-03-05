@@ -115,7 +115,7 @@
             <form action="/talk">
                 <select name="talk_id" id="talk-select" class="select-list"  size="{{ talks|length }}">
                     {% for i in range(talks|length) %}
-                        <option value="{{ i }}" class="talk-option">{{ }talks[i]}</option>
+                        <option value="{{ i }}" class="talk-option">{{talks[i]}}</option>
                    {% endfor %}
                 </select>
             <input type="submit" value="話しかける" class="submit-button" id="talk-button">
