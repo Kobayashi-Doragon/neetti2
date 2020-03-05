@@ -12,19 +12,25 @@ class player():
         self.neet_fulness = 0
         self.neet_motivation = 0
         self.time = "仕事前"
-        self.foods = []#追加
-        self.buys = []#追加
-        self.data_id = ['1', '3', '6', '8', '10']#乱数表(追加)
+        self.foods = []  # 追加
+        self.buys = []  # 追加
+        self.data_id = ['1', '3', '6', '8', '10']  # 乱数表(追加)
         sql.connect(self)
 
     # データベースの値を表示するために取得(追加したメソッド)
-    def update_data(self):
-        for i in range(len(self.data_id)):#データの読み込み
+    def update_data(self):  # 変更しました!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        for i in range(len(self.data_id)):  # データの読み込み
             check = "select food_name from food1 where food_id = '" + self.data_id[i] + "'"
-            self.foods.append(sql.query(self, check))#foods(配列)にデータを追加
+            check2 = "select food_price from food1 where food_id = '" + self.data_id[i] + "'"
+            name = sql.query(self, check)
+            price = sql.query(self, check2)
+            self.foods.append({'name': name, 'price': price})  # foods(配列)にデータを追加
 
             check = "select buy_name from buy where buy_id = '" + self.data_id[i] + "'"
-            self.buys.append(sql.query(self, check))#buys(配列)にデータを追加
+            check2 = "select buy_price from buy where buy_id = '" + self.data_id[i] + "'"
+            name = sql.query(self, check)
+            price = sql.query(self, check2)
+            self.buys.append({'name': name, 'price': price})  # buys(配列)にデータを追加
 
     # 入力を元にログインしてゲーム画面に
     def login(self, id, password):
@@ -96,31 +102,31 @@ class player():
     def feed(self, food_id):
         # お金が足りるか確認用
 
-        check = "select food_price from food1 where food_id = '" + self.data_id[int(food_id)] + "'"# 変更箇所
+        check = "select food_price from food1 where food_id = '" + self.data_id[int(food_id)] + "'"  # 変更箇所
         price = sql.query(self, check)[0]
 
         if self.money - price < 0:
             return "お金が足りません"
         else:
-            text = "select * from food1 where food_id = '" + self.data_id[int(food_id)] + "'"# 変更箇所
+            text = "select * from food1 where food_id = '" + self.data_id[int(food_id)] + "'"  # 変更箇所
             result = sql.query(self, text)
             self.money -= price
             self.neet_fulness += 100
             self.neet_motivation += result[3]
             # return result[1] + "をあげた"　
-            #resultの表示でエラーが出たので、消去しました。
+            # resultの表示でエラーが出たので、消去しました。
 
     # 物を買ってあげたとき
     # 選択されたアイテムとDBを照合しステータスを更新
     def buy(self, buy_id):
         # お金が足りるか確認用
-        check = "select buy_price from buy where buy_id = '" + self.data_id[int(buy_id)] + "'" # 変更箇所
+        check = "select buy_price from buy where buy_id = '" + self.data_id[int(buy_id)] + "'"  # 変更箇所
         price = sql.query(self, check)[0]
 
         if self.money - price < 0:
             return "お金が足りません"
         else:
-            text = "select * from buy where buy_id = '" + self.data_id[int(buy_id)] + "'" #変更箇所
+            text = "select * from buy where buy_id = '" + self.data_id[int(buy_id)] + "'"  # 変更箇所
             result = sql.query(self, text)
             self.money -= price
             self.neet_motivation += result[3]
