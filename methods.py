@@ -112,7 +112,7 @@ class player():
         return result[2][rand_int]
 
 
-    # 食事を与えたとき
+    # 食事を与えたときあああ
     # 選択されたアイテムとDBを照合しステータスを更新
     def feed(self, food_id):
         # お金が足りるか確認用
