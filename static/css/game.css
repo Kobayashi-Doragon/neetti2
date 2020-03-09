@@ -11,622 +11,394 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-    display: block;
+  display: block;
 }
 
 body {
-    line-height: 1;
+  line-height: 1;
 }
 
 ol, ul {
-    list-style: none;
+  list-style: none;
 }
 
 blockquote, q {
-    quotes: none;
+  quotes: none;
 }
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-    content: "";
-    content: none;
+  content: "";
+  content: none;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 html {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
-.red{
-    color:red;
-}
+
 /* ここから*/
+
+/*チュートリアルのcss*/
 body {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+.tutorial-box{
+  position:absolute;
+  top:40px;
+  left:calc((100% - 500px)/2);
+  width:500px;
+  height:calc(100% - 150px);
+  background: rgba(0, 0, 0, 0.7);
+  border: solid 3px black;
+  z-index:2;
+}
+.delete-button{
+  position:absolute;
+  top:10px;
+  right:10px;
+  color:white;
 }
 
-.tutorial-box {
-    display: none;
-    position: absolute;
-    top: 40px;
-    left: calc((100% - 500px) / 2);
-    width: 500px;
-    height: calc(100% - 150px);
-    background: rgba(0, 0, 0, 0.7);
-    border: solid 3px black;
-    z-index: 2;
-}
-
-.delete-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-.tutorial-box h2 {
-    font-size: 32px;
-    color: white;
-    margin: 30px 5px 0 0;
-    text-align: center;
-}
-
-.tutorial-text {
-    margin: 10px 5px;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    letter-spacing: 0.1em;
-    line-height: 120%;
-}
-
-@media (max-width: 780px) {
-    .tutorial-box {
-        width: 80%;
-        left: 10%;
-    }
-}
-@media (max-width: 780px) {
-    .tutorial-box {
-        width: 82%;
-        left: 9%;
-        background: rgba(0, 0, 0, 0.85);
-    }
-    .tutorial-box h2 {
-        font-size: 26px;
-        color: white;
-        margin: 30px 5px 0 0;
-        text-align: center;
-    }
-    .tutorial-text {
-        font-size: 20px;
-    }
-}
+/**/
 .main-screen {
-  font-family: "Cambria Math";
-  font-weight:bold;
-    position: relative;
-    top: 50px;
-    left: 50px;
-    width: calc(100% - 2 * 50px);
-    height: calc(100% - 2 * 50px);
-    background-size: 100% 100%;
-    background-image: url("../image/background.jpg");
-    background-repeat: no-repeat;
+  position: relative;
+  top: 50px;
+  left: 50px;
+  width: calc( 100% - 2*50px);
+  height: calc(100% - 2*50px);
+  background-size: 100% 100%;
+  background-image: url("../image/background.jpg");
+  background-repeat: no-repeat;
 }
-
 @media (max-width: 480px) {
-    .main-screen {
-        background-image: url("../image/background3.jpg");
-        top: 20px;
-        left: 20px;
-        width: calc(100% - 2 * 20px);
-        height: calc(100% - 2 * 20px);
-    }
-}
-
-.door-image {
-    position: absolute;
-    width: 240px;
-    bottom: 19.6%;
-    left: 20%;
-    z-index: 0;
-}
-
-@media (max-width: 780px) {
-    .door-image {
-        left: 15%;
-    }
-}
-
-@media (max-width: 480px) {
-    .door-image {
-        width: 150px;
-        bottom: 17.6%;
-        left: 8%;
-    }
-}
-
-.state-box {
-    position: absolute;
+  .main-screen {
+    background-image: url("../image/background2.jpg");
     top: 20px;
     left: 20px;
-    width: 250px;
-    height: 100px;
-    border: solid 2px black;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 1;
+    width: calc( 100% - 2*20px);
+    height: calc(100% - 2*20px);
+  }
+}
+/*ドアの位置、大きさ*/
+.door-image {
+  position: absolute;
+  width: 200px;
+  bottom: 19.6%;
+  left: 20%;
+  z-index: 0;
+}
+@media (max-width: 780px) {
+  .door-image {
+    left: 15%;
+  }
+}
+@media (max-width: 480px) {
+  .door-image {
+    width: 150px;
+    bottom: 17.6%;
+    left: 8%;
+  }
+}
+/*日時とお金を表示する枠のデザイン*/
+.state-box {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 250px;
+  height: 100px;
+  border: solid 2px black;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+@media (max-width: 480px) {
+  .state-box {
+    width: calc(100% - 20px);
+    height: 145px;
+  }
 }
 
 .state-table {
-    margin: 5px;
-    font-size: 24px;
-    text-align: left;
+  margin: 5px;
+  font-size: 24px;
 }
-
 .state-table th {
-    height: 30px;
-    width: 3em;
-    padding-right: 7px;
-    font-weight: bold;
-}
-@media (max-width: 780px) {
-    .state-box {
-        left:20px;
-        top:20px;
-    }
-    .state-table {
-        margin: 10px 5px 5px 5px;
-        font-size:32px;
-    }
-
+  height: 30px;
+  width: 3em;
+  padding-right: 7px;
+  font-weight: bold;
 }
 @media (max-width: 480px) {
-    .state-box {
-        top: 10px;
-        left: 10px;
-        width: 175px;
-        height: 70px;
-    }
-    .state-table {
-        margin: 10px 5px 5px 5px;
-        font-size:22px;
-    }
-    .state-table th {
-        padding-right: 5px;
-    }
+  .state-table {
+    margin: 10px 5px 5px 5px;
+  }
 }
 
-
-/*セーブ、ログアウト等のボタン群についてのcss*/
+/*ログアウト、セーブ等のボタンのcss*/
 .confi-box {
-    position: absolute;
-    top: 40px;
-    right: 60px;
-    z-index: 1;
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  z-index: 1;
 }
-
+@media (max-width: 780px) {
+  .confi-box {
+    top: 20px;
+    right: 30px;
+  }
+}
+@media (max-width: 480px) {
+  .confi-box {
+    top: 85px;
+    left: 20px;
+  }
+}
 .confi-list li {
-    display: inline-block;
-    width: 250px;
-}
-@media (max-width: 1200px) {
-    .confi-box {
-        top: 20px;
-        right: 70px;
-    }
-    .confi-list li {
-        display: block;
-        width: 250px;
-    }
+  display: inline-block;
+  width: 270px;
 }
 @media (max-width: 780px) {
-    .confi-box {
-        top: 20px;
-        right: 70px;
-    }
-    .confi-list li {
-        display: block;
-        width:200px;
-    }
-}
-
-@media (max-width: 480px) {
-    .confi-box {
-        top: 10px;
-        right: 10px;
-    }
-    .confi-list li {
-        display: block;
-        width: 45%;
-    }
-}
-.confi-button {
-    width: 230px;
-    height: 60px;
-    cursor: pointer;
-    font-size: 30px;
-    font-weight:bold;
-    border: outset 4px white;
-    box-shadow: 4px 4px 6px #444;
-}
-
-.confi-button:hover {
-    box-shadow: 3px 3px 6px #555;
-    transition: all 0.1s ease;
-    text-decoration: none;
-}
-
-.confi-button:active {
-    width: 228px;
-    height: 59px;
-    font-size: 29px;
-    background-position: 0% !important;
-    box-shadow: 0 0px 12px #BBB;
-    transition: all 0.2s ease;
-    transform: translateY(1px);
-}
-@media (max-width: 1200px) {
-    .confi-button {
-        width: 250px;
-    }
-    .confi-button:active {
-        width: 248px;
-    }
-}
-@media (max-width: 780px) {
-    .confi-button {
-        width: 200px;
-        height: 65px;
-        font-size: 32px;
-    }
-    .confi-button:active {
-        width: 198px;
-        height: 64px;
-        font-size: 31px;
-    }
-    #tutorial{
-        font-size:25px;
-    }
-    #tutorial:active{
-        font-size:24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .confi-button {
-        width: 130px;
-        height: 50px;
-        font-size: 22px;
-    }
-    #tutorial{
-        padding-top:0;
-        font-size:18px;
-    }
-    .confi-button:active {
-        width: 128px;
-        height: 49px;
-        font-size: 21px;
-    }
-    #tutorial:active{
-        font-size:17px;
-    }
-}
-
-.br480{
-    display: none;
+  .confi-list li {
+    width: 170px;
+  }
 }
 @media (max-width: 480px) {
-    .br480{
-        display: block;
-    }
+  .confi-list li {
+    width: 45%;
+  }
 }
-
-
-/*食事を作る、モノを上げる等のボタン群についてのcss*/
+/*行動選択(掃除、食事を作る、話しかける等のボタンのcss)*/
 .action-box {
-    position: absolute;
-    top: 240px;
-    right: 200px;
+  position: absolute;
+  top: 240px;
+  right: 200px;
+}
+@media (max-width: 780px) {
+  .action-box {
+    right: 100px;
+  }
+}
+@media (max-width: 480px) {
+  .action-box {
+    top: 200px;
+    right: 10px;
+  }
 }
 
-.action-button {
+.action-list .game-button {
+  background-color: #7f7f7f;
+  border: outset 4px #8c8c8c;
+}
+.action-list li {
+  height: 70px;
+  margin-top: 20px;
+}
+@media (max-width: 480px) {
+  .action-list li {
+    height: 50px;
+    margin-top: 10px;
+  }
+}
+.game-button {
   width: 250px;
   height: 70px;
   cursor: pointer;
   font-size: 40px;
+  border: outset 4px white;
   box-shadow: 4px 4px 6px #444;
-  background-color: #7f7f7f;
-  border: outset 4px #8c8c8c;
 }
-
-.action-button:hover {
-    box-shadow: 3px 3px 6px #555;
-    transition: all 0.1s ease;
-    text-decoration: none;
+.game-button:hover {
+  box-shadow: 3px 3px 6px #555;
+  transition: all 0.1s ease;
+  text-decoration: none;
 }
-
-.action-button:active {
-    width: 246px;
-    height: 68px;
-    font-size: 39px;
-    background-position: 0% !important;
-    box-shadow: 0 0px 12px #BBB;
-    transition: all 0.2s ease;
-    transform: translateY(1px);
-}
-@media (max-width: 1200px) {
-    .action-box {
-        right: 70px;
-    }
+.game-button:active {
+  width: 246px;
+  height: 68px;
+  font-size: 39px;
+  background-position: 0% !important;
+  box-shadow: 0 0px 12px #BBB;
+  transition: all 0.2s ease;
+  transform: translateY(1px);
 }
 @media (max-width: 780px) {
-    .action-box {
-        right: 70px;
-    }
-    .action-button {
-        width: 200px;
-        height: 65px;
-        font-size: 32px;
-    }
-    .action-button:active {
-        width: 198px;
-        height: 64px;
-        font-size: 31px;
-    }
-}
-
-@media (max-width: 480px) {
-    .action-box {
-        top: 200px;
-        right: 10px;
-    }
-    .action-button {
-        width: 130px;
-        height: 50px;
-        font-size: 22px;
-    }
-    .action-button:active {
-        width: 128px;
-        height: 49px;
-        font-size: 21px;
-    }
-}
-
-.action-list li {
-    height: 70px;
-    margin-top: 20px;
-}
-
-@media (max-width: 480px) {
-    .action-list li {
-        height: 50px;
-        margin-top: 10px;
-    }
-}
-
-#work {
-    position: absolute;
-}
-
-#sleep {
-    display: none;
-    position: absolute;
-}
-
-.select-list {
-    position: absolute;
-    top: 240px;
-    right: 500px;
-    display: none;
-}
-
-.select-list option {
-    cursor: pointer;
-    height: 40px;
-    width: 500px;
-    font-size: 30px;
-    border: solid black 1px;
-    background: rgba(0, 0, 0, 0.2);
-    color: white;
-}
-.submit-button {
-    display: none;
-    position: absolute;
-    top: 500px;
-    right: calc(500px + 250px - 100px);
-    width: 200px;
-    height: 60px;
-    font-size: 30px;
-    cursor: pointer;
-    box-shadow: 4px 4px 6px #444;
-    background-color: #429de6;
-    border: outset 4px #45b3ff;
-    color:white;
-}
-
-.submit-button:hover {
-    box-shadow: 3px 3px 6px #555;
-    transition: all 0.1s ease;
-    text-decoration: none;
-}
-
-.submit-button:active {
-    width: 198px;
+  .game-button:active {
+    width: 158px;
     height: 59px;
-    font-size: 29px;
-    background-position: 0% !important;
-    box-shadow: 0 0px 12px #BBB;
-    transition: all 0.2s ease;
-    transform: translateY(1px);
+    font-size: 27px;
+  }
 }
-@media (max-width: 1200px) {
-    .select-list {
-        left: 20px;
-    }
-    .select-list option {
-        width: 500px;
-    }
-    .submit-button{
-        top:calc(240px + 40px*5 + 30px);
-        left:80px;
-        height:60px;
-        width:200px;
-    }
+@media (max-width: 480px) {
+  .game-button:active {
+    width: 128px;
+    height: 49px;
+    font-size: 21px;
+  }
 }
 @media (max-width: 780px) {
-    .select-list {
-        left: 20px;
-    }
-    .select-list option {
-        width: 340px;
-        height:44px;
-        font-size: 36px;
-        overflow: scroll;
-    }
-    .submit-button{
-        top:calc(240px + 44px*5 + 30px);
-        left:50px;
-        height:60px;
-        width:200px;
-        font-size:30px;
-    }
+  .game-button {
+    width: 160px;
+    height: 60px;
+    font-size: 28px;
+  }
 }
-
 @media (max-width: 480px) {
-    .select-list {
-        top: 180px;
-        left: 10px;
-    }
-    .select-list option {
-        font-size:22px;
-        height: 35px;
-        width: 180px;
-    }
-    .submit-button{
-        top:calc(180px + 35px*5 + 20px);
-        left:20px;
-        height:40px;
-        width:160px;
-        font-size:25px;
-    }
-    .submit-button:active {
-        width: 158px;
-        height: 39px;
-        font-size: 24px;
-    }
+  .game-button {
+    width: 130px;
+    height: 50px;
+    font-size: 22px;
+  }
+}
+#work {
+  position: absolute;
+}
+#sleep {
+  display: none;
+  position: absolute;
 }
 
+/*行動選択後のアイテム選択に関するcss*/
+.select-list {
+  position: absolute;
+  top: 240px;
+  right: 500px;
+  display: none;
+}
+.select-list option {
+  cursor: pointer;
+  height: 40px;
+  width: 400px;
+  font-size: 30px;
+  border: solid black 1px;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+}
 
-.balloon2-top {
-    position: absolute;
-    top: calc(100% - 19.6% - 10px);
+.submit-button {
+  display: none;
+  position: absolute;
+  top:500px;
+  right:500px;
+  width:200px;
+  height:40px;
+  font-size: 30px;
+}
+@media (max-width: 780px) {
+  .select-list option {
+    width: 300px;
+  }
+}
+@media (max-width: 480px) {
+  .select-list option {
+    right: 170px;
+    font-size: 26px;
+    height: 35px;
+    width: 180px;
+  }
+}
+@media (max-width: 780px) {
+  .select-list {
+    right: 300px;
+  }
+}
+@media (max-width: 480px) {
+  .select-list {
+    top: 180px;
     left: 20px;
-    width: 80%;
-    height: calc(19.6% - 20px);
-    display: inline-block;
-    margin: 1.5em 0;
-    padding: 7px 10px;
-    min-width: 120px;
-    max-width: 100%;
-    font-size: 16px;
-    background: rgba(0, 0, 0, 0.5);
-    border: solid 3px black;
-    box-sizing: border-box;
+  }
 }
-/*
+
+/*吹き出しのcss*/
+.balloon2-top {
+  position: absolute;
+  top: calc(100% - 19.6%);
+  left: 20px;
+  width: 80%;
+  height: calc(19.6% - 30px);
+  display: inline-block;
+  margin: 1.5em 0;
+  padding: 7px 10px;
+  min-width: 120px;
+  max-width: 100%;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  border: solid 3px black;
+  box-sizing: border-box;
+}
+
 .balloon2-top:after {
-    content: "";
-    position: absolute;
-    top: -30px;
-    left: calc(20% + 100px);
-    margin-left: -17px;
-    border: 14px solid transparent;
-    border-bottom: 14px solid black;
-    z-index: 1;
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: calc(20% + 100px);
+  margin-left: -17px;
+  border: 14px solid transparent;
+  border-bottom: 14px solid black;
+  z-index: 1;
 }
-*/
 @media (max-width: 780px) {
-    .balloon2-top:after {
-        left: calc(15% + 80px);
-    }
+  .balloon2-top:after {
+    left: calc(15% + 80px);
+  }
 }
-
 @media (max-width: 480px) {
-    .balloon2-top:after {
-        left: calc(8% + 60px);
-    }
+  .balloon2-top:after {
+    left: calc(8% + 60px);
+  }
 }
-
 .neet-coment {
-    margin-top: 5px;
-    color: #60c4ff;
-    font-size: 40px;
-    font-family: "MS UI Gothic";
+  color: white;
+  font-size: 40px;
+  font-family: "MS UI Gothic";
+}
+@media (max-width: 480px) {
+  .neet-coment {
+    font-size: 28px;
+  }
 }
 
-@media (max-width: 480px) {
-    .neet-coment {
-        font-size: 28px;
-    }
-}
-.mother-comment {
-    color: white;
-    font-size: 40px;
-    font-family: "MS UI Gothic";
-}
-
-@media (max-width: 480px) {
-    .mother-comment {
-        font-size: 28px;
-    }
-}
 /*バツボタンの描画*/
-.css-cancel {
-    display: inline-block;
-    position: relative;
-    margin: 0 20px 0 7px;
-    padding: 0;
-    width: 4px;
-    height: 20px;
-    background: white;
-    transform: rotate(45deg);
+.css-cancel{
+  display: inline-block;
+  position: relative;
+  margin: 0 20px 0 7px;
+  padding: 0;
+  width: 4px;
+  height: 20px;
+  background: #000;
+  transform: rotate(45deg);
 }
-
-.css-cancel:before {
-    display: block;
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -8px;
-    width: 20px;
-    height: 4px;
-    margin-top: -2px;
-    background: white;
+.css-cancel:before{
+  display: block;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  width: 20px;
+  height: 4px;
+  margin-top: -2px;
+  background: #000;
 }
