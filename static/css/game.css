@@ -59,14 +59,15 @@ html {
 .red{
     color:red;
 }
+
 /* ここから*/
+/* チュートリアルボックス*/
 body {
     position: absolute;
     width: 100%;
     height: 100%;
     background: black;
 }
-
 .tutorial-box {
     display: none;
     position: absolute;
@@ -78,7 +79,6 @@ body {
     border: solid 3px black;
     z-index: 2;
 }
-
 .delete-button {
     position: absolute;
     top: 10px;
@@ -89,14 +89,12 @@ body {
     color: white;
     background-color: rgba(0, 0, 0, 0.7);
 }
-
 .tutorial-box h2 {
     font-size: 32px;
     color: white;
     margin: 30px 5px 0 0;
     text-align: center;
 }
-
 .tutorial-text {
     margin: 10px 5px;
     font-size: 24px;
@@ -105,7 +103,6 @@ body {
     letter-spacing: 0.1em;
     line-height: 120%;
 }
-
 @media (max-width: 780px) {
     .tutorial-box {
         width: 80%;
@@ -128,6 +125,8 @@ body {
         font-size: 20px;
     }
 }
+
+/* チュートリアルボックス*/
 .main-screen {
   font-family: "Cambria Math";
   font-weight:bold;
@@ -140,7 +139,6 @@ body {
     background-image: url("../image/background.jpg");
     background-repeat: no-repeat;
 }
-
 @media (max-width: 480px) {
     .main-screen {
         background-image: url("../image/background3.jpg");
@@ -151,6 +149,7 @@ body {
     }
 }
 
+/* ドアの画像*/
 .door-image {
     position: absolute;
     width: 240px;
@@ -158,13 +157,11 @@ body {
     left: 20%;
     z-index: 0;
 }
-
 @media (max-width: 780px) {
     .door-image {
         left: 15%;
     }
 }
-
 @media (max-width: 480px) {
     .door-image {
         width: 150px;
@@ -173,6 +170,7 @@ body {
     }
 }
 
+/*日時、所持金の箱*/
 .state-box {
     position: absolute;
     top: 20px;
@@ -183,13 +181,11 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1;
 }
-
 .state-table {
     margin: 5px;
     font-size: 24px;
     text-align: left;
 }
-
 .state-table th {
     height: 30px;
     width: 3em;
@@ -205,7 +201,6 @@ body {
         margin: 10px 5px 5px 5px;
         font-size:32px;
     }
-
 }
 @media (max-width: 480px) {
     .state-box {
@@ -222,7 +217,6 @@ body {
         padding-right: 5px;
     }
 }
-
 
 /*セーブ、ログアウト等のボタン群についてのcss*/
 .confi-box {
@@ -256,7 +250,6 @@ body {
         width:200px;
     }
 }
-
 @media (max-width: 480px) {
     .confi-box {
         top: 10px;
@@ -276,13 +269,11 @@ body {
     border: outset 4px white;
     box-shadow: 4px 4px 6px #444;
 }
-
 .confi-button:hover {
     box-shadow: 3px 3px 6px #555;
     transition: all 0.1s ease;
     text-decoration: none;
 }
-
 .confi-button:active {
     width: 228px;
     height: 59px;
@@ -318,7 +309,6 @@ body {
         font-size:24px;
     }
 }
-
 @media (max-width: 480px) {
     .confi-button {
         width: 130px;
@@ -338,7 +328,6 @@ body {
         font-size:17px;
     }
 }
-
 .br480{
     display: none;
 }
@@ -347,7 +336,6 @@ body {
         display: block;
     }
 }
-
 
 /*食事を作る、モノを上げる等のボタン群についてのcss*/
 .action-box {
@@ -365,13 +353,11 @@ body {
   background-color: #7f7f7f;
   border: outset 4px #8c8c8c;
 }
-
 .action-button:hover {
     box-shadow: 3px 3px 6px #555;
     transition: all 0.1s ease;
     text-decoration: none;
 }
-
 .action-button:active {
     width: 246px;
     height: 68px;
@@ -401,7 +387,6 @@ body {
         font-size: 31px;
     }
 }
-
 @media (max-width: 480px) {
     .action-box {
         top: 200px;
@@ -418,7 +403,6 @@ body {
         font-size: 21px;
     }
 }
-
 .action-list li {
     height: 70px;
     margin-top: 20px;
@@ -430,22 +414,20 @@ body {
         margin-top: 10px;
     }
 }
-
 #work {
     position: absolute;
 }
-
 #sleep {
     position: absolute;
 }
 
+/*  アイテム選択のリストのcss*/
 .select-list {
     position: absolute;
     top: 240px;
     right: 500px;
     display: none;
 }
-
 .select-list option {
     cursor: pointer;
     height: 40px;
@@ -470,12 +452,12 @@ body {
     color:white;
 }
 
+/*確定ボタンについてのcss*/
 .submit-button:hover {
     box-shadow: 3px 3px 6px #555;
     transition: all 0.1s ease;
     text-decoration: none;
 }
-
 .submit-button:active {
     width: 198px;
     height: 59px;
@@ -517,7 +499,6 @@ body {
         font-size:30px;
     }
 }
-
 @media (max-width: 480px) {
     .select-list {
         top: 180px;
@@ -542,7 +523,7 @@ body {
     }
 }
 
-
+/*吹き弟子に関するcss*/
 .balloon2-top {
     position: absolute;
     top: calc(100% - 19.6% - 10px);
@@ -570,18 +551,17 @@ body {
     border-bottom: 14px solid black;
     z-index: 1;
 }
-*/
+
 @media (max-width: 780px) {
     .balloon2-top:after {
         left: calc(15% + 80px);
     }
 }
-
 @media (max-width: 480px) {
     .balloon2-top:after {
         left: calc(8% + 60px);
     }
-}
+}*/
 
 .neet-coment {
     margin-top: 5px;
@@ -589,7 +569,6 @@ body {
     font-size: 40px;
     font-family: "MS UI Gothic";
 }
-
 @media (max-width: 480px) {
     .neet-coment {
         font-size: 28px;
@@ -600,12 +579,12 @@ body {
     font-size: 40px;
     font-family: "MS UI Gothic";
 }
-
 @media (max-width: 480px) {
     .mother-comment {
         font-size: 28px;
     }
 }
+
 /*バツボタンの描画*/
 .css-cancel {
     display: inline-block;
@@ -617,7 +596,6 @@ body {
     background: white;
     transform: rotate(45deg);
 }
-
 .css-cancel:before {
     display: block;
     content: "";
