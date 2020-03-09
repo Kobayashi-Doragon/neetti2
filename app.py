@@ -2,7 +2,6 @@
 
 from flask import Flask, render_template, request
 import methods
-import sql
 
 app = Flask(__name__)
 player = methods.player()
@@ -23,8 +22,10 @@ def login():
     # DBと同じならゲーム画面へ、違うならもう一度入力してもらう
     if player.login(id, password):
         player.update_data()
-        return render_template("game.html", money=player.money, fatigue=player.mother_fatigue,
-                               time=player.time, foods=player.foods, buys=player.buys)#foodsとbuysを追加(これ以降全て)
+        return render_template("game.html", message="", neet_answer="",
+                               money=player.money, time=player.time,
+                               count=player.count, foods=player.foods,
+                               buys=player.buys, talks=player.talks)#foodsとbuysを追加(これ以降全て)
     else:
         return render_template("login.html", message="ユーザIDもしくはパスワードが間違っています")
 
@@ -40,8 +41,10 @@ def create_account():
 
     if player.create(id, password):
         player.update_data()
-        return render_template("game.html", money=player.money, fatigue=player.mother_fatigue,
-                               time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("game.html", message="", neet_answer="",
+                               money=player.money, time=player.time,
+                               count=player.count, foods=player.foods,
+                               buys=player.buys, talks=player.talks)
     else:
         return render_template("login.html", message="ユーザIDが既に使用されています")
 
@@ -50,15 +53,17 @@ def create_account():
 @app.route("/save")
 def save():
     player.save()
-    return render_template("game.html", message="セーブしました", neet_answer="", money=player.money,
-                           fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+    return render_template("game.html", message="セーブしました", neet_answer="",
+                           money=player.money, time=player.time,
+                           count=player.count, foods=player.foods,
+                           buys=player.buys, talks=player.talks)
 
 
 # セーブしてログイン画面に戻る
 @app.route("/logout")
 def logout():
     player.save()
-    return render_template("login.html")
+    return render_template("login.html", message="")
 
 
 # ご飯と同じく選択肢で
@@ -68,10 +73,13 @@ def talk():
     talk_id = request.args.get("talk_id")
     answer = player.talk(talk_id)
     if player.check_neet():
-        return render_template("game.html", message="ニートが出てきた", neet_answer=answer, money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
-    return render_template("game.html", message="話しかけた", neet_answer="ニート「" + answer + "」", money=player.money,
-                           fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+        #　クリアしたとき　要変更
+        return render_template("game.html", message="ニートが出てきた", neet_answer=answer,
+                               money=player.money, time=player.time, foods=player.foods, buys=player.buys)
+    return render_template("game.html", message="母「〇〇と話しかけた」", neet_answer="ニート「" + answer + "」",
+                           money=player.money, time=player.time,
+                           count=player.count, foods=player.foods,
+                           buys=player.buys, talks=player.talks)
 
 
 @app.route("/feed")
@@ -82,11 +90,14 @@ def feed():
     player.feed(food_id)
     result = "食事を与えた"
     if player.check_neet():
+        # 　クリアしたとき　要変更
         return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
                                fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
     else:
-        return render_template("game.html", message=result, neet_answer="", money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("game.html", message=result, neet_answer="",
+                               money=player.money, time=player.time,
+                               count=player.count, foods=player.foods,
+                               buys=player.buys, talks=player.talks)
 
 
 @app.route("/buy")
@@ -97,14 +108,17 @@ def buy():
     player.buy(buy_id)
     result="物を買ってあげた"
     if player.check_neet():
+        # 　クリアしたとき　要変更
         return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
                                fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
-    return render_template("game.html", message=result, neet_answer="", money=player.money,
-                           fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+    return render_template("game.html", message=result, neet_answer="",
+                               money=player.money, time=player.time,
+                               count=player.count, foods=player.foods,
+                               buys=player.buys, talks=player.talks)
 
 @app.route("/work_sleep")
 def work():
-    if player.time == "仕事前":
+    if player.time:
         result = player.work()
     else:
         result = player.sleep()
@@ -112,8 +126,10 @@ def work():
     if player.check_neet():
         return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
                                fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
-    return render_template("game.html", message=result, money=player.money, fatigue=player.mother_fatigue,
-                           time=player.time, foods=player.foods, buys=player.buys)
+    return render_template("game.html", message=result, neet_answer="",
+                               money=player.money, time=player.time,
+                               count=player.count, foods=player.foods,
+                               buys=player.buys, talks=player.talks)
 
 
 if __name__ == '__main__':

@@ -40,7 +40,7 @@
             <table class="state-table">
                 <tr>
                     <th>日時</th>
-                    <td>10日目
+                    <td>{{ count }}日目
                         {% if time==True %}
                             朝
                         {%  elif time == False %}
@@ -91,11 +91,11 @@
                 </li>
                 <li>
                     {% if time==True %}
-                        <form action="/work">
+                        <form action="/work_sleep">
                             <input type="submit" value="仕事にいく" class="action-button" id="work">
                         </form>
                     {% elif time==False %}
-                        <form action="/sleep">
+                        <form action="/work_sleep">
                             <input type="submit" value="寝る" class="action-button" id="sleep">
                         </form>
                     {% endif %}
