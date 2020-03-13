@@ -4,7 +4,7 @@ import psycopg2
 
 
 def connect(self):
-    self.conn = psycopg2.connect("host=127.0.0.1 dbname=food user=postgres password=8610naka")#ここは変えてください
+    self.conn = psycopg2.connect("host=127.0.0.1 dbname=food user=postgres password=○○○")#ここは変えてください
     self.cur = self.conn.cursor()
 
 
