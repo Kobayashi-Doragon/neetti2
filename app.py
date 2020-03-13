@@ -25,7 +25,7 @@ def login():
         return render_template("game.html", message="", neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
-                               buys=player.buys, talks=player.talks)#foodsとbuysを追加(これ以降全て)
+                               buys=player.buys, talks=player.talks)  # foodsとbuysを追加(これ以降全て)
     else:
         return render_template("login.html", message="ユーザIDもしくはパスワードが間違っています")
 
@@ -72,11 +72,13 @@ def talk():
     # トーク
     talk_id = request.args.get("talk_id")
     answer = player.talk(talk_id)
+    '''
     if player.check_neet():
-        #　クリアしたとき　要変更
+        # 　クリアしたとき　要変更
         return render_template("game.html", message="ニートが出てきた", neet_answer=answer,
                                money=player.money, time=player.time, foods=player.foods, buys=player.buys)
-    return render_template("game.html", message="母「〇〇と話しかけた」", neet_answer="ニート「" + answer + "」",
+    '''
+    return render_template("game.html", message=player.talks[int(talk_id)], neet_answer=answer,
                            money=player.money, time=player.time,
                            count=player.count, foods=player.foods,
                            buys=player.buys, talks=player.talks)
@@ -87,49 +89,68 @@ def feed():
     # feed
     food_id = request.args.get("food_id")
     # result = player.feed(food_id)　 #バグが出たので除去
-    player.feed(food_id)
-    result = "食事を与えた"
-    if player.check_neet():
+    result = player.feed(food_id)
+    # result = "食事を与えた"
+    '''if player.check_neet():
         # 　クリアしたとき　要変更
-        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
+        return render_template("game.html", message="息子が出てきた", neet_answer="", money=player.money,
                                fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
     else:
-        return render_template("game.html", message=result, neet_answer="",
-                               money=player.money, time=player.time,
-                               count=player.count, foods=player.foods,
-                               buys=player.buys, talks=player.talks)
+    '''
+    return render_template("game.html", message=result, neet_answer="",
+                           money=player.money, time=player.time,
+                           count=player.count, foods=player.foods,
+                           buys=player.buys, talks=player.talks)
 
 
 @app.route("/buy")
 def buy():
     # buy
     buy_id = request.args.get("buy_id")
-    #result = player.buy(buy_id) #バグが出たので除去
-    player.buy(buy_id)
-    result="物を買ってあげた"
-    if player.check_neet():
+    result = player.buy(buy_id)  # バグが出たので除去
+    # player.buy(buy_id)
+    # result="物を買ってあげた"
+    '''if player.check_neet():
         # 　クリアしたとき　要変更
-        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
+        return render_template("game.html", message="息子が出てきた", neet_answer="", money=player.money,
                                fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+    '''
     return render_template("game.html", message=result, neet_answer="",
-                               money=player.money, time=player.time,
-                               count=player.count, foods=player.foods,
-                               buys=player.buys, talks=player.talks)
+                           money=player.money, time=player.time,
+                           count=player.count, foods=player.foods,
+                           buys=player.buys, talks=player.talks)
+
 
 @app.route("/work_sleep")
 def work():
     if player.time:
         result = player.work()
+        player.clean = False;
     else:
         result = player.sleep()
     player.update_data()
     if player.check_neet():
         return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
-    return render_template("game.html", message=result, neet_answer="",
-                               money=player.money, time=player.time,
-                               count=player.count, foods=player.foods,
+                               fatigue=player.mother_fatigue, time=player.time, count=player.count, foods=player.foods,
                                buys=player.buys, talks=player.talks)
+        # return render_remplete("end.html")
+    return render_template("game.html", message=result, neet_answer="",
+                           money=player.money, time=player.time,
+                           count=player.count, foods=player.foods,
+                           buys=player.buys, talks=player.talks)
+
+
+@app.route("/clean")
+def clean():
+    if player.clean:
+        return render_template("game.html", message="(部屋はきれいだから,掃除はいらないかな)", neet_answer="", money=player.money,
+                               fatigue=player.mother_fatigue, time=player.time, count=player.count, foods=player.foods, buys=player.buys, talks=player.talks)
+    else:
+        player.mother_fatigue -= 30
+        player.neet_motivation += 50
+        player.clean = True;
+        return render_template("game.html", message="(掃除しました)", neet_answer="", money=player.money,
+                               fatigue=player.mother_fatigue, time=player.time, count=player.count, foods=player.foods, buys=player.buys, talks=player.talks)
 
 
 if __name__ == '__main__':

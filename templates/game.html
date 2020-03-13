@@ -86,9 +86,11 @@
                 <li>
                     <input type="submit" value="話す" class="action-button" id="talk">
                 </li>
-                <li>
-                    <input type="submit" value="掃除" class="action-button" id="clean">
-                </li>
+                <form action="/clean">
+                    <li>
+                        <input type="submit" value="掃除" class="action-button" id="clean">
+                    </li>
+                 </form>
                 <li>
                     {% if time==True %}
                         <form action="/work_sleep">
@@ -116,7 +118,7 @@
             <form action="/buy">
                 <select name="buy_id" id="buy-select" class="select-list" size="{{ buys|length }}">
                    {% for i in range(buys|length) %}
-                        <option value="{{ i }}" class="buy-option">{{ buys[i]['name'] }}({{buys[i]['price']}}円)}</option>
+                        <option value="{{ i }}" class="buy-option">{{ buys[i]['name'] }}({{buys[i]['price']}}円)</option>
                    {% endfor %}
                 </select>
                 <input type="submit" value="確定" class="submit-button" id="buy-button">
