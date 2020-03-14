@@ -20,6 +20,10 @@ def login():
     id = request.form["id"]
     password = request.form["password"]
     # DBと同じならゲーム画面へ、違うならもう一度入力してもらう
+    if id == "" or password == "":
+        return render_template("login.html", message="ユーザIDとパスワードを入力してください")
+    if not id.isdecimal():
+        return render_template("login.html", message="ユーザーIDには半角数字を入力してください")
     if player.login(id, password):
         player.update_data()
         return render_template("game.html", message="", neet_answer="",
@@ -29,7 +33,6 @@ def login():
     else:
         return render_template("login.html", message="ユーザIDもしくはパスワードが間違っています")
 
-
 # 入力を元にアカウント追加
 @app.route("/create", methods=["POST"])
 def create_account():
@@ -38,7 +41,8 @@ def create_account():
 
     if id == "" or password == "":
         return render_template("login.html", message="ユーザIDとパスワードを入力してください")
-
+    if not id.isdecimal():
+        return render_template("login.html", message="ユーザーIDには半角数字のみを入力してください")
     if player.create(id, password):
         player.update_data()
         return render_template("game.html", message="", neet_answer="",
@@ -125,7 +129,6 @@ def buy():
 def work():
     if player.time:
         result = player.work()
-        player.clean = False;
     else:
         result = player.sleep()
     player.update_data()

@@ -16,7 +16,7 @@ class player():
         self.buys = []
         self.talks = []
         self.data_id = []
-        self.count = 0
+        self.count = 1
         sql.connect(self)
         self.clean = False;
 
@@ -81,7 +81,7 @@ class player():
             return False
 
         else:  # ユーザIDが重複しないとき
-            text = "insert into users values(" + id + ",'" + password + "',0,1000,True,0,0,0);"
+            text = "insert into users values(" + id + ",'" + password + "',0,1000,True,0,0,1);"
             sql.add(self, text)
             self.player_id = id
             return True
@@ -170,6 +170,7 @@ class player():
         if not self.time:  # 夜の場合
             # ステータス(時間、疲労度)を更新
             self.time = True
+            self.clean = False
             self.mother_fatigue += 100
             self.count += 1
             self.neet_fulness -= 30

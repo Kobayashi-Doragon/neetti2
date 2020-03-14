@@ -14,9 +14,9 @@
     <body>
         <div class="main-screen">
             <!--入力間違いのときのエラーメッセージ用-->
-            
-            {{ message }}
+            <div class="error_message">{{ message }}</div>
             <h1 class="title-message">ニートっちへようこそ</h1>
+            <h1 class="title-message-sp">ニートっち</h1>
             <div class="login-form">
                 <form action="/login" method="POST">
                     <input type="text" name="id" placeholder="ユーザー名" class="id-form"><br>

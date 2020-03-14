@@ -528,7 +528,7 @@ body {
     position: absolute;
     top: calc(100% - 19.6% - 10px);
     left: 20px;
-    width: 80%;
+    width: 90%;
     height: calc(19.6% - 20px);
     display: inline-block;
     margin: 1.5em 0;
@@ -540,29 +540,11 @@ body {
     border: solid 3px black;
     box-sizing: border-box;
 }
-/*
-.balloon2-top:after {
-    content: "";
-    position: absolute;
-    top: -30px;
-    left: calc(20% + 100px);
-    margin-left: -17px;
-    border: 14px solid transparent;
-    border-bottom: 14px solid black;
-    z-index: 1;
+.mother-comment {
+    color: white;
+    font-size: 40px;
+    font-family: "MS UI Gothic";
 }
-
-@media (max-width: 780px) {
-    .balloon2-top:after {
-        left: calc(15% + 80px);
-    }
-}
-@media (max-width: 480px) {
-    .balloon2-top:after {
-        left: calc(8% + 60px);
-    }
-}*/
-
 .neet-coment {
     margin-top: 5px;
     color: #60c4ff;
@@ -570,20 +552,19 @@ body {
     font-family: "MS UI Gothic";
 }
 @media (max-width: 480px) {
-    .neet-coment {
-        font-size: 28px;
+    .balloon2-top {
+        left:10px;
+        width:95%;
     }
-}
-.mother-comment {
-    color: white;
-    font-size: 40px;
-    font-family: "MS UI Gothic";
-}
-@media (max-width: 480px) {
     .mother-comment {
-        font-size: 28px;
+        font-size: 24px;
     }
+    .neet-coment {
+        font-size: 24px;
+    }
+
 }
+
 
 /*バツボタンの描画*/
 .css-cancel {
