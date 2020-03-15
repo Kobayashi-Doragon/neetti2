@@ -23,7 +23,7 @@ class player():
     # データベースの値を表示するために取得(追加したメソッド)
     def update_data(self):
 
-        random.seed(2 * self.count + self.time)
+        random.seed(2 * self.count + self.time+int(self.player_id))
         self.data_id = random.sample(range(1, 31), 5)
 
         self.foods.clear()
@@ -113,6 +113,7 @@ class player():
             result = sql.query(self, text)
             rand_int = random.randint(0, 1)
             self.neet_motivation += result[3][rand_int]
+            self.talks.pop(int(talk_id))
             return result[2][rand_int]
 
     # 食事を与えたときあああ
@@ -130,6 +131,7 @@ class player():
             self.money -= price
             self.neet_fulness += 100
             self.neet_motivation += result[3]
+            self.foods.pop(int(food_id))
             return "(" + result[1] + "をあげた)"
             # resultの表示でエラーが出たので、消去しました。
 
@@ -147,6 +149,7 @@ class player():
             result = sql.query(self, text)
             self.money -= price
             self.neet_motivation += result[3]
+            self.buys.pop(int(buy_id))
             return "(" + result[1] + "をあげた)"
         # resultの表示でエラーが出たので、消去しました。
 

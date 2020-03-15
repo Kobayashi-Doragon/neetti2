@@ -108,26 +108,29 @@
     <!-- 行動選択後の選択肢-->
         <div class="action-select-box">
             <form action="/feed">
-                <select name="food_id" id="food-select" class="select-list" size="{{ foods|length }}">
+                <select name="food_id" id="food-select" class="select-list" size="{{ (foods|length) + 1 }}">
                     {% for i in range(foods|length) %}
                         <option value="{{ i }}" class="food-option">{{ foods[i]['name'] }}({{ foods[i]['price'] }}円)</option>
                     {% endfor %}
+                    <option class="action-cancel">やめておく</option>
                 </select>
                 <input type="submit" value="確定" class="submit-button" id="food-button">
             </form>
             <form action="/buy">
-                <select name="buy_id" id="buy-select" class="select-list" size="{{ buys|length }}">
+                <select name="buy_id" id="buy-select" class="select-list" size="{{ (buys|length) + 1 }}">
                    {% for i in range(buys|length) %}
                         <option value="{{ i }}" class="buy-option">{{ buys[i]['name'] }}({{buys[i]['price']}}円)</option>
                    {% endfor %}
+                    <option class="action-cancel">やめておく</option>
                 </select>
                 <input type="submit" value="確定" class="submit-button" id="buy-button">
             </form>
             <form action="/talk">
-                <select name="talk_id" id="talk-select" class="select-list"  size="{{ talks|length }}">
+                <select name="talk_id" id="talk-select" class="select-list"  size="{{ (talks|length) + 1 }}">
                     {% for i in range(talks|length) %}
                         <option value="{{ i }}" class="talk-option">{{talks[i]}}</option>
                    {% endfor %}
+                    <option class="action-cancel">今は話しかけない</option>
                 </select>
             <input type="submit" value="確定" class="submit-button" id="talk-button">
             </form>
@@ -142,7 +145,6 @@
                 <p class="neet-coment">息子「{{ neet_answer }}」</p>
             {% endif %}
         </div>
-
     </div>
 </body>
 </html>

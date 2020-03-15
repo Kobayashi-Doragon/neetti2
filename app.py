@@ -43,6 +43,8 @@ def create_account():
         return render_template("login.html", message="ユーザIDとパスワードを入力してください")
     if not id.isdecimal():
         return render_template("login.html", message="ユーザーIDには半角数字のみを入力してください")
+    if int(id) >= 100000:
+        return render_template("login.html", message="idには5桁までの半角数字を入力してください")
     if player.create(id, password):
         player.update_data()
         return render_template("game.html", message="", neet_answer="",
@@ -75,14 +77,15 @@ def logout():
 def talk():
     # トーク
     talk_id = request.args.get("talk_id")
-    answer = player.talk(talk_id)
+    word=player.talks[int(talk_id)]
+    response = player.talk(talk_id)
     '''
     if player.check_neet():
         # 　クリアしたとき　要変更
         return render_template("game.html", message="ニートが出てきた", neet_answer=answer,
                                money=player.money, time=player.time, foods=player.foods, buys=player.buys)
     '''
-    return render_template("game.html", message=player.talks[int(talk_id)], neet_answer=answer,
+    return render_template("game.html", message=word, neet_answer=response,
                            money=player.money, time=player.time,
                            count=player.count, foods=player.foods,
                            buys=player.buys, talks=player.talks)

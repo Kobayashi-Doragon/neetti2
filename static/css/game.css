@@ -428,6 +428,12 @@ body {
     right: 500px;
     display: none;
 }
+select.select-list{
+    font-size: 30px;
+    border: solid black 1px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
 .select-list option {
     cursor: pointer;
     height: 40px;
@@ -441,7 +447,7 @@ body {
     display: none;
     position: absolute;
     top: 500px;
-    right: calc(500px + 250px - 100px);
+    right: calc(500px + 300px - 100px);
     width: 200px;
     height: 60px;
     font-size: 30px;
@@ -475,7 +481,7 @@ body {
         width: 500px;
     }
     .submit-button{
-        top:calc(240px + 40px*5 + 30px);
+        top:calc(240px + 40px*6 + 30px);
         left:80px;
         height:60px;
         width:200px;
@@ -492,7 +498,7 @@ body {
         overflow: scroll;
     }
     .submit-button{
-        top:calc(240px + 44px*5 + 30px);
+        top:calc(240px + 44px*6 + 30px);
         left:50px;
         height:60px;
         width:200px;
@@ -510,7 +516,7 @@ body {
         width: 180px;
     }
     .submit-button{
-        top:calc(180px + 35px*5 + 20px);
+        top:calc(180px + 35px*6 + 20px);
         left:20px;
         height:40px;
         width:160px;
