@@ -87,7 +87,9 @@
                     <input type="submit" value="話す" class="action-button" id="talk">
                 </li>
                 <li>
-                    <input type="submit" value="掃除" class="action-button" id="clean">
+                    <form action="/clean">
+                        <input type="submit" value="掃除" class="action-button" id="clean">
+                    </form>
                 </li>
                 <li>
                     {% if time==True %}

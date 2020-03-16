@@ -77,7 +77,7 @@ def talk():
         #　クリアしたとき　要変更
         return render_template("game.html", message="ニートが出てきた", neet_answer=answer,
                                money=player.money, time=player.time, foods=player.foods, buys=player.buys)
-    return render_template("game.html", message="母「〇〇と話しかけた」", neet_answer="ニート「" + answer + "」",
+    return render_template("game.html", message=answer[0], neet_answer=answer[1],
                            money=player.money, time=player.time,
                            count=player.count, foods=player.foods,
                            buys=player.buys, talks=player.talks)
@@ -108,6 +108,19 @@ def buy():
     buy_id = request.args.get("buy_id")
     player.buy(buy_id)
     result="物を買ってあげた"
+    if player.check_neet():
+        # 　クリアしたとき　要変更
+        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
+                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+    return render_template("game.html", message=result, neet_answer="",
+                               money=player.money, time=player.time,
+                               count=player.count, foods=player.foods,
+                               buys=player.buys, talks=player.talks)
+
+
+@app.route("/clean")
+def clean():
+    result=player.clean()
     if player.check_neet():
         # 　クリアしたとき　要変更
         return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,

@@ -16,7 +16,7 @@ class player():
         self.buys = []
         self.talks = []
         self.data_id = []
-        self.count = 0
+        self.count = 1
         sql.connect(self)
 
 
@@ -70,6 +70,7 @@ class player():
                 self.time = result[4]
                 self.neet_fulness = result[5]
                 self.neet_motivation = result[6]
+                self.count = result[7]
                 return True
             else:
                 return False
@@ -89,7 +90,7 @@ class player():
             return False
         # ユーザIDが重複しないときアカウント作成
         else:
-            text = "insert into users values(" + id + ",'" + password + "',0,1000,True,0,0,0);"
+            text = "insert into users values(" + id + ",'" + password + "',0,2000,True,0,0,1);"
             sql.add(self, text)
             self.player_id = id
             return True
@@ -119,11 +120,14 @@ class player():
         rand_int=random.randint(0, 1)
         # ステータスを更新
         self.neet_motivation += result[3][rand_int]
-        return result[2][rand_int]
+        # ステータスによって返事を変える
+        if self.neet_fulness <= -100:
+            return result[1],"お腹がすいた"
+        else:
+            return result[1],result[2][rand_int]
 
 
     # 食事を与えたとき
-    # 選択されたアイテムとDBを照合しステータスを更新
     def feed(self, food_id):
         # お金が足りるか確認用
         check = "select food_price from food1 where food_id = '" + str(self.data_id[int(food_id)]) + "'"
@@ -158,12 +162,24 @@ class player():
             self.neet_motivation += result[3]
 
 
+    # 掃除したとき
+    def clean(self):
+        # 疲れているとき掃除できない
+        if self.mother_fatigue <= 0:
+            return "疲れていて掃除できない"
+        # ステータス更新
+        else:
+            self.mother_fatigue -= 40
+            self.neet_motivation += 50
+            return "部屋を掃除した"
+
+
     # 仕事に行ったとき
     def work(self):
         # ステータスを更新
         self.time = False
         self.mother_fatigue -= 100
-        self.money += 2000
+        self.money += 3000
         self.neet_fulness -= 50
         return "仕事に行った"
 
