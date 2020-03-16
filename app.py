@@ -73,10 +73,10 @@ def talk():
     # talk_idを取得しtalkメソッド呼び出し
     talk_id = request.args.get("talk_id")
     answer = player.talk(talk_id)
+    # クリアしたとき別画面へ
     if player.check_neet():
-        #　クリアしたとき　要変更
-        return render_template("game.html", message="ニートが出てきた", neet_answer=answer,
-                               money=player.money, time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("end.html", money=player.money, time=player.time,
+                               count=player.count)
     return render_template("game.html", message=answer[0], neet_answer=answer[1],
                            money=player.money, time=player.time,
                            count=player.count, foods=player.foods,
@@ -90,10 +90,10 @@ def feed():
     food_id = request.args.get("food_id")
     player.feed(food_id)
     result = "食事を与えた"
+    # クリアしたとき別画面へ
     if player.check_neet():
-        # 　クリアしたとき　要変更
-        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("end.html", money=player.money, time=player.time,
+                               count=player.count)
     else:
         return render_template("game.html", message=result, neet_answer="",
                                money=player.money, time=player.time,
@@ -108,10 +108,10 @@ def buy():
     buy_id = request.args.get("buy_id")
     player.buy(buy_id)
     result="物を買ってあげた"
+    # クリアしたとき別画面へ
     if player.check_neet():
-        # 　クリアしたとき　要変更
-        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("end.html", money=player.money, time=player.time,
+                               count=player.count)
     return render_template("game.html", message=result, neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
@@ -121,14 +121,15 @@ def buy():
 @app.route("/clean")
 def clean():
     result=player.clean()
+    # クリアしたとき別画面へ
     if player.check_neet():
-        # 　クリアしたとき　要変更
-        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("end.html", money=player.money, time=player.time,
+                               count=player.count)
     return render_template("game.html", message=result, neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
                                buys=player.buys, talks=player.talks)
+
 
 
 # 働く/寝るボタンを押したとき
@@ -143,9 +144,10 @@ def work():
     else:
         result = player.sleep()
     player.update_data()
+    # クリアしたとき別画面へ
     if player.check_neet():
-        return render_template("game.html", message="ニートが出てきた", neet_answer="", money=player.money,
-                               fatigue=player.mother_fatigue, time=player.time, foods=player.foods, buys=player.buys)
+        return render_template("end.html", money=player.money, time=player.time,
+                               count=player.count)
     return render_template("game.html", message=result, neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
