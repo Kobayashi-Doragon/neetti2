@@ -170,7 +170,7 @@ class player():
         # ステータス更新
         else:
             self.mother_fatigue -= 40
-            self.neet_motivation += 50
+            self.neet_motivation += 20
             return "部屋を掃除した"
 
 
