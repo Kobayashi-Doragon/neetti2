@@ -54,6 +54,7 @@ class player():
             name = sql.query(self, check)
             self.talks.append(name[0])
 
+
     # 入力を元にログインしてゲーム画面に
     def login(self, id, password):
         # DBと入力を照合(true or false)
@@ -71,6 +72,7 @@ class player():
                 self.time = result[4]
                 self.neet_fulness = result[5]
                 self.neet_motivation = result[6]
+                self.count = result[7]
                 return True
             else:
                 return False
@@ -78,7 +80,8 @@ class player():
         else:
             return False
 
-    # アカウントの作成
+
+    # 入力を元にアカウントの作成
     def create(self, id, password):
         text = "select exists(select * from users where player_id = " + id + ");"
         result = sql.query(self, text)
@@ -101,11 +104,10 @@ class player():
             time_bool = "False"
 
         # selfのステータスをDBに格納
-        text = "update users set mother_fatigue=" + str(self.mother_fatigue) + ",money=" + str(
-            self.money) + ",time='" + time_bool + "',neet_fulness=" + str(
-            self.neet_fulness) + ",neet_motivation=" + str(self.neet_motivation) + ",count=" + str(
-            self.count) + " where player_id=" + str(
-            self.player_id) + ";"
+        text = "update users set mother_fatigue=" + str(self.mother_fatigue) + ",money=" +\
+               str(self.money) + ",time='"+ time_bool +"',neet_fulness=" + str(self.neet_fulness) +\
+               ",neet_motivation=" + str(self.neet_motivation) + ",count=" + str(self.count) +\
+               " where player_id=" + str(self.player_id) + ";"
         sql.add(self, text)
         return True
 
@@ -124,13 +126,15 @@ class player():
             self.talks_id.pop(int(talk_id))
             return result[2][rand_int]
 
-    # 食事を与えたときあああ
-    # 選択されたアイテムとDBを照合しステータスを更新
+
+    # 食事を与えたとき
     def feed(self, food_id):
         # お金が足りるか確認用
         check = "select food_price from food1 where food_id = '" + str(self.foods_id[int(food_id)]) + "'"  # 変更箇所
         price = sql.query(self, check)[0]
         self.mother_fatigue -= 50
+
+        # お金が足りないときエラーメッセージ
         if self.money - price < 0:
             return "(お金が足りない)"
         else:
@@ -145,12 +149,13 @@ class player():
             # resultの表示でエラーが出たので、消去しました。
 
     # 物を買ってあげたとき
-    # 選択されたアイテムとDBを照合しステータスを更新
     def buy(self, buy_id):
         # お金が足りるか確認用
         check = "select buy_price from buy where buy_id = '" + str(self.buys_id[int(buy_id)]) + "'"  # 変更箇所
         price = sql.query(self, check)[0]
         self.mother_fatigue -= 30
+
+        # お金が足りないときエラーメッセージ
         if self.money - price < 0:
             return "(お金が足りない)"
         else:
@@ -163,41 +168,50 @@ class player():
             return "(" + result[1] + "をあげた)"
         # resultの表示でエラーが出たので、消去しました。
 
+
+    # 掃除したとき
+    def clean(self):
+        # 疲れているとき掃除できない
+        if self.mother_fatigue <= 0:
+            return "疲れていて掃除できない"
+        # ステータス更新
+        else:
+            self.mother_fatigue -= 40
+            self.neet_motivation += 20
+            return "部屋を掃除した"
+
+
     # 仕事に行ったとき
     def work(self):
-        if self.time:  # 朝の場合
-            # ステータス(時間、疲労度、お金)を更新
-            self.time = False
-            self.neet_fulness -= 20
-            if self.mother_fatigue < -500:  # 疲労度が一定以下の場合
-                self.mother_fatigue += 100
-                return "(疲れが溜まっていて、仕事に行かず寝てしまった)"
-            else:  # 疲労度が一定以上の場合
+        # ステータス(時間、疲労度、お金)を更新
+        self.time = False
+        self.neet_fulness -= 20
+        if self.mother_fatigue < -500:  # 疲労度が一定以下の場合
+            self.mother_fatigue -= 100
+            return "(疲れが溜まっていて、仕事に行かず寝てしまった)"
+        else:  # 疲労度が一定以上の場合
+            self.mother_fatigue -= 50
+            if self.count % 7 == 0:
+                self.money += 10000
                 self.mother_fatigue -= 50
-                if self.count % 7 == 0:
-                    self.money += 10000
-                    self.mother_fatigue -= 50
-                    return "(仕事に行ってきた。今日はいつもより多く働いた)"
-                else:
-                    self.money += 2000
-                    return "(仕事に行ってきた・)"
-        return "仕事に行く前に寝よう"
+                return "(仕事に行ってきた。今日はいつもより多く働いた)"
+            else:
+                self.money += 2000
+                return "(仕事に行ってきた・)"
 
     # 寝たとき
     def sleep(self):
-        if not self.time:  # 夜の場合
-            # ステータス(時間、疲労度)を更新
-            self.time = True
-            self.clean = False
-            self.count += 1
-            self.neet_fulness -= 30
-            if self.count % 6 == 1:
-                self.mother_fatigue += 30
-                return "(あまり眠れなかった)"
-            else:
-                self.mother_fatigue += 100
-                return "(ぐっすり眠れた)"
-        return "先に仕事を終わらせよう"
+        # ステータス(時間、疲労度)を更新
+        self.time = True
+        self.clean = False
+        self.count += 1
+        self.neet_fulness -= 30
+        if self.count % 6 == 1:
+            self.mother_fatigue += 30
+            return "(あまり眠れなかった)"
+        else:
+            self.mother_fatigue += 100
+            return "(ぐっすり眠れた)"
 
     # ニートの機嫌を確認
     def check_neet(self):

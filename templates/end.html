@@ -1,0 +1,136 @@
+<!--ゲーム画面用-->
+
+<!DOCTYPE html>
+<html lang="ja" onclick=mouseclick()>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/game.css') }}">
+    <script type=text/javascript src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/end-script.js') }}"></script>
+    <title>ニートっち</title>
+</head>
+<body>
+    <div class="main-screen">
+    <!-- チュートリアル-->
+        <div class="tutorial-box">
+            <h2>チュートリアル</h2>
+            <div class="tutorial-text">
+                <p>息子と二人で生活するシングルマザーです。</p>
+                <p>昨年、高校生の息子が引きこもりになってしまいました。</p>
+                <p>部屋からは深夜からしか出てきません。</p>
+                <p>私には何ができるだろうか?</p>
+            </div>
+            <h2>プレイ中の注意</h2>
+            <div class="tutorial-text">
+                <p>ゲームは<span class="red">セーブ</span>してからログアウトしてください</p>
+            </div>
+            <button class="delete-button" id="tutorial-delete">
+                <span class="css-cancel"></span>
+            </button>
+        </div>
+
+    <!-- ドアの画像-->
+    <div class="door-images">
+        <img src="static/image/door_open2.jpg" class="door-image" id="door-open2" />
+        <img src="static/image/door_open1.jpg" class="door-image" id="door-open1" />
+        <img src="static/image/door.jpg" class="door-image" id="door" />
+    </div>
+
+    <!-- ステータス(日にち、時間、所持金)-->
+        <div class="state-box">
+            <table class="state-table">
+                <tr>
+                    <th>日時</th>
+                    <td>{{ count }}日目
+                        {% if time==True %}
+                            朝
+                        {%  elif time == False %}
+                            夜
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>所持金</th>
+                    <td>{{ money }}円</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ログアウト、セーブ、チュートリアルのボタン-->
+        <div class="confi-box">
+            <ul class="confi-list">
+                <li>
+                    <input type="submit" value="セーブ" class="confi-button" id="save">
+                </li>
+                <li>
+                        <input type="submit" value="ログアウト" class="confi-button" id="logout">
+                </li>
+                <li>
+                    <button type="submit"  class="confi-button" id="tutorial">チュート<br class="br480">リアル</button>
+                </li>
+            </ul>
+        </div>
+
+    <!-- 行動選択ボタン-->
+        <div class="action-box">
+            <ul class="action-list">
+                <li>
+                    <input type="submit" value="食事を作る" class="action-button" id="feed">
+                </li>
+                <li>
+                    <input type="submit" value="物を買う" class="action-button" id="buy">
+                </li>
+                <li>
+                    <input type="submit" value="話す" class="action-button" id="talk">
+                </li>
+                <li>
+                        <input type="submit" value="掃除" class="action-button" id="clean">
+                </li>
+                <li>
+                    {% if time==True %}
+                            <input type="submit" value="仕事にいく" class="action-button" id="work">
+                    {% elif time==False %}
+                            <input type="submit" value="寝る" class="action-button" id="sleep">
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+
+    <!--吹き出し-->
+        <div class="balloon2-top">
+            <p class="mother-comment">
+                息子が出てきた▼
+            </p>
+            <p class="neet-coment"></p>
+        </div>
+
+    <!--クリア時の文章をクリックで遷移-->
+    <script type="text/javascript">
+
+        <!--表示される文章-->
+        var text=[
+            "久しぶり",
+            "元気も出たし、これから学校に通うよ",
+            "今までありがとう"
+        ];
+        var count = 0;
+
+        <!--クリックで次の文章へ-->
+        function mouseclick(){
+            if(count < text.length){
+                document.getElementsByClassName("mother-comment")[0].innerHTML="";
+                var elem = document.getElementsByClassName("neet-coment");
+                elem[0].innerHTML="息子「" + text[count] + "」▼";
+                count++;
+            }
+        }
+
+    </script>
+
+    </div>
+
+</body>
+</html>
