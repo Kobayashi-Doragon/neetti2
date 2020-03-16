@@ -81,10 +81,6 @@ def talk():
     talk_id = request.args.get("talk_id")
     word=player.talks[int(talk_id)]
     response = player.talk(talk_id)
-    if player.check_neet():
-        #　クリアしたとき　要変更
-        return render_template("end.html", money=player.money, time=player.time,
-                               count=player.count)
     return render_template("game.html", message=word, neet_answer=response,
                            money=player.money, time=player.time,
                            count=player.count, foods=player.foods,
@@ -98,12 +94,7 @@ def feed():
     food_id = request.args.get("food_id")
     player.feed(food_id)
     result = "食事を与えた"
-    # クリアしたとき別画面へ
-    if player.check_neet():
-        return render_template("end.html", money=player.money, time=player.time,
-                               count=player.count)
-    else:
-        return render_template("game.html", message=result, neet_answer="",
+    return render_template("game.html", message=result, neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
                                buys=player.buys, talks=player.talks)
@@ -117,26 +108,11 @@ def buy():
     player.buy(buy_id)
     result="物を買ってあげた"
     # クリアしたとき別画面へ
-    if player.check_neet():
-        return render_template("end.html", money=player.money, time=player.time,
-                               count=player.count)
     return render_template("game.html", message=result, neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
                                buys=player.buys, talks=player.talks)
 
-
-@app.route("/clean")
-def clean():
-    result=player.clean()
-    # クリアしたとき別画面へ
-    if player.check_neet():
-        return render_template("end.html", money=player.money, time=player.time,
-                               count=player.count)
-    return render_template("game.html", message=result, neet_answer="",
-                               money=player.money, time=player.time,
-                               count=player.count, foods=player.foods,
-                               buys=player.buys, talks=player.talks)
 
 @app.route("/clean")
 def clean():
@@ -149,6 +125,7 @@ def clean():
         player.clean = True;
         return render_template("game.html", message="(掃除しました)", neet_answer="", money=player.money,
                                fatigue=player.mother_fatigue, time=player.time, count=player.count, foods=player.foods, buys=player.buys, talks=player.talks)
+
 
 # 働く/寝るボタンを押したとき
 @app.route("/work_sleep")

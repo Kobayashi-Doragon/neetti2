@@ -96,6 +96,7 @@ class player():
             self.player_id = id
             return True
 
+
     # ステータスをDBに格納
     def save(self):
         if self.time:
@@ -110,6 +111,7 @@ class player():
                " where player_id=" + str(self.player_id) + ";"
         sql.add(self, text)
         return True
+
 
     # 話しかけたとき
     def talk(self, talk_id):
@@ -148,6 +150,7 @@ class player():
             return "(" + result[1] + "をあげた)"
             # resultの表示でエラーが出たので、消去しました。
 
+
     # 物を買ってあげたとき
     def buy(self, buy_id):
         # お金が足りるか確認用
@@ -169,18 +172,6 @@ class player():
         # resultの表示でエラーが出たので、消去しました。
 
 
-    # 掃除したとき
-    def clean(self):
-        # 疲れているとき掃除できない
-        if self.mother_fatigue <= 0:
-            return "疲れていて掃除できない"
-        # ステータス更新
-        else:
-            self.mother_fatigue -= 40
-            self.neet_motivation += 20
-            return "部屋を掃除した"
-
-
     # 仕事に行ったとき
     def work(self):
         # ステータス(時間、疲労度、お金)を更新
@@ -199,6 +190,7 @@ class player():
                 self.money += 2000
                 return "(仕事に行ってきた・)"
 
+
     # 寝たとき
     def sleep(self):
         # ステータス(時間、疲労度)を更新
@@ -212,6 +204,7 @@ class player():
         else:
             self.mother_fatigue += 100
             return "(ぐっすり眠れた)"
+
 
     # ニートの機嫌を確認
     def check_neet(self):
