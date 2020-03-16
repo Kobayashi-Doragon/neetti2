@@ -1,7 +1,7 @@
 <!--ゲーム画面用-->
 
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" onclick=mouseclick()>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Pragma" content="no-cache">
@@ -63,14 +63,10 @@
         <div class="confi-box">
             <ul class="confi-list">
                 <li>
-                    <form action="/save">
                     <input type="submit" value="セーブ" class="confi-button" id="save">
-                    </form>
                 </li>
                 <li>
-                    <form action="/logout">
                         <input type="submit" value="ログアウト" class="confi-button" id="logout">
-                    </form>
                 </li>
                 <li>
                     <button type="submit"  class="confi-button" id="tutorial">チュート<br class="br480">リアル</button>
@@ -91,28 +87,22 @@
                     <input type="submit" value="話す" class="action-button" id="talk">
                 </li>
                 <li>
-                    <form action="/clean">
                         <input type="submit" value="掃除" class="action-button" id="clean">
-                    </form>
                 </li>
                 <li>
                     {% if time==True %}
-                        <form action="/work_sleep">
                             <input type="submit" value="仕事にいく" class="action-button" id="work">
-                        </form>
                     {% elif time==False %}
-                        <form action="/work_sleep">
                             <input type="submit" value="寝る" class="action-button" id="sleep">
-                        </form>
                     {% endif %}
                 </li>
             </ul>
         </div>
 
     <!--吹き出し-->
-        <div class="balloon2-top" onclick=mouseclick()>
+        <div class="balloon2-top">
             <p class="mother-comment">
-                息子が出てきた
+                息子が出てきた▼
             </p>
             <p class="neet-coment"></p>
         </div>
@@ -133,7 +123,7 @@
             if(count < text.length){
                 document.getElementsByClassName("mother-comment")[0].innerHTML="";
                 var elem = document.getElementsByClassName("neet-coment");
-                elem[0].innerHTML="息子「" + text[count] + "」";
+                elem[0].innerHTML="息子「" + text[count] + "」▼";
                 count++;
             }
         }
@@ -141,5 +131,6 @@
     </script>
 
     </div>
+
 </body>
 </html>
