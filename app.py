@@ -16,7 +16,7 @@ def login_screen():
 # ログインボタンでログインしゲーム画面へ
 @app.route("/login", methods=["POST"])
 def login():
-    # 入力データを引数にloginメソッド呼ぶ
+    # 入力データを取得
     id = request.form["id"]
     password = request.form["password"]
     # DBと同じならゲーム画面へ、違うならもう一度入力してもらう
@@ -25,20 +25,21 @@ def login():
         return render_template("game.html", message="", neet_answer="",
                                money=player.money, time=player.time,
                                count=player.count, foods=player.foods,
-                               buys=player.buys, talks=player.talks)#foodsとbuysを追加(これ以降全て)
+                               buys=player.buys, talks=player.talks)
     else:
         return render_template("login.html", message="ユーザIDもしくはパスワードが間違っています")
 
 
-# 入力を元にアカウント追加
+# アカウント作成
 @app.route("/create", methods=["POST"])
 def create_account():
+    # 入力データを取得
     id = request.form["id"]
     password = request.form["password"]
-
+    # 入力が不十分な時
     if id == "" or password == "":
         return render_template("login.html", message="ユーザIDとパスワードを入力してください")
-
+    #　入力が重複しないときアカウント作成
     if player.create(id, password):
         player.update_data()
         return render_template("game.html", message="", neet_answer="",
@@ -49,7 +50,7 @@ def create_account():
         return render_template("login.html", message="ユーザIDが既に使用されています")
 
 
-# セーブボタン用
+# セーブボタンを押したとき
 @app.route("/save")
 def save():
     player.save()
@@ -59,17 +60,17 @@ def save():
                            buys=player.buys, talks=player.talks)
 
 
-# セーブしてログイン画面に戻る
+# ログアウトボタンを押したとき
 @app.route("/logout")
 def logout():
     player.save()
     return render_template("login.html", message="")
 
 
-# ご飯と同じく選択肢で
+# 話しかけたとき
 @app.route("/talk")
 def talk():
-    # トーク
+    # talk_idを取得しtalkメソッド呼び出し
     talk_id = request.args.get("talk_id")
     answer = player.talk(talk_id)
     if player.check_neet():
@@ -82,11 +83,11 @@ def talk():
                            buys=player.buys, talks=player.talks)
 
 
+# ご飯を与えたとき
 @app.route("/feed")
 def feed():
-    # feed
+    # food_idを取得しfeedメソッド呼び出し
     food_id = request.args.get("food_id")
-    # result = player.feed(food_id)　 #バグが出たので除去
     player.feed(food_id)
     result = "食事を与えた"
     if player.check_neet():
@@ -100,11 +101,11 @@ def feed():
                                buys=player.buys, talks=player.talks)
 
 
+# 物を買い与えたとき
 @app.route("/buy")
 def buy():
-    # buy
+    # buy_idを取得しbuyメソッド呼び出し
     buy_id = request.args.get("buy_id")
-    #result = player.buy(buy_id) #バグが出たので除去
     player.buy(buy_id)
     result="物を買ってあげた"
     if player.check_neet():
@@ -116,9 +117,15 @@ def buy():
                                count=player.count, foods=player.foods,
                                buys=player.buys, talks=player.talks)
 
+
+# 働く/寝るボタンを押したとき
 @app.route("/work_sleep")
 def work():
-    if player.time:
+    # 疲労度，時間によって呼び出すメソッドを変更する
+    if player.mother_fatigue < -500:
+        player.sleep()
+        result = "疲れて仕事に行けないので寝た"
+    elif player.time:
         result = player.work()
     else:
         result = player.sleep()
