@@ -28,9 +28,9 @@ class player():
     def update_data(self):
 
         # random.seed(2 * self.count + self.time+int(self.player_id))
-        self.foods_id = random.sample(range(1, 31), 5)
-        self.buys_id = random.sample(range(1, 31), 5)
-        self.talks_id = random.sample(range(1, 31), 5)
+        self.foods_id = random.sample(range(1, 40), 5)
+        self.buys_id = random.sample(range(1, 40), 5)
+        self.talks_id = random.sample(range(1, 40), 5)
         self.foods.clear()
         self.buys.clear()
         self.talks.clear()
