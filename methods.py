@@ -12,37 +12,44 @@ class player():
         self.neet_fulness = 0
         self.neet_motivation = 0
         self.time = True
-        self.foods = []
-        self.buys = []
-        self.talks = []
-        self.data_id = []
         self.count = 1
+
+        self.foods = []  # 表示する食事のリスト()
+        self.buys = []  # 表示する商品のリスト
+        self.talks = []
+        self.foods_id = []  # foods[i]のデータベース上のidがfoods_id[i]
+        self.buys_id = []
+        self.talks_id = []
+
         sql.connect(self)
-        self.clean = False;
+        self.clean = False
 
     # データベースの値を表示するために取得(追加したメソッド)
     def update_data(self):
 
-        random.seed(2 * self.count + self.time+int(self.player_id))
-        self.data_id = random.sample(range(1, 31), 5)
-
+        # random.seed(2 * self.count + self.time+int(self.player_id))
+        self.foods_id = random.sample(range(1, 31), 5)
+        self.buys_id = random.sample(range(1, 31), 5)
+        self.talks_id = random.sample(range(1, 31), 5)
         self.foods.clear()
         self.buys.clear()
         self.talks.clear()
 
-        for item in self.data_id:  # データの読み込み
+        for item in self.foods_id:  # データの読み込み
             check = "select food_name from food1 where food_id = '" + str(item) + "'"
             check2 = "select food_price from food1 where food_id = '" + str(item) + "'"
             name = sql.query(self, check)
             price = sql.query(self, check2)
             self.foods.append({'name': name[0], 'price': price[0]})  # foods(配列)にデータを追加
 
+        for item in self.buys_id:  # データの読み込み
             check = "select buy_name from buy where buy_id = '" + str(item) + "'"
             check2 = "select buy_price from buy where buy_id = '" + str(item) + "'"
             name = sql.query(self, check)
             price = sql.query(self, check2)
             self.buys.append({'name': name[0], 'price': price[0]})  # buys(配列)にデータを追加
 
+        for item in self.talks_id:  # データの読み込み
             check = "select talk_sentence from talk where talk_id = '" + str(item) + "'"
             name = sql.query(self, check)
             self.talks.append(name[0])
@@ -109,29 +116,31 @@ class player():
             self.neet_motivation -= 10
             return "お腹がすいた"
         else:  # DBのtalkテーブルからニートの返事を選択
-            text = "select * from talk where talk_id = '" + str(self.data_id[int(talk_id)]) + "'"
+            text = "select * from talk where talk_id = '" + str(self.talks_id[int(talk_id)]) + "'"
             result = sql.query(self, text)
             rand_int = random.randint(0, 1)
             self.neet_motivation += result[3][rand_int]
             self.talks.pop(int(talk_id))
+            self.talks_id.pop(int(talk_id))
             return result[2][rand_int]
 
     # 食事を与えたときあああ
     # 選択されたアイテムとDBを照合しステータスを更新
     def feed(self, food_id):
         # お金が足りるか確認用
-        check = "select food_price from food1 where food_id = '" + str(self.data_id[int(food_id)]) + "'"  # 変更箇所
+        check = "select food_price from food1 where food_id = '" + str(self.foods_id[int(food_id)]) + "'"  # 変更箇所
         price = sql.query(self, check)[0]
         self.mother_fatigue -= 50
         if self.money - price < 0:
             return "(お金が足りない)"
         else:
-            text = "select * from food1 where food_id = '" + str(self.data_id[int(food_id)]) + "'"  # 変更箇所
+            text = "select * from food1 where food_id = '" + str(self.foods_id[int(food_id)]) + "'"  # 変更箇所
             result = sql.query(self, text)
             self.money -= price
             self.neet_fulness += 100
             self.neet_motivation += result[3]
             self.foods.pop(int(food_id))
+            self.foods_id.pop(int(food_id))
             return "(" + result[1] + "をあげた)"
             # resultの表示でエラーが出たので、消去しました。
 
@@ -139,17 +148,18 @@ class player():
     # 選択されたアイテムとDBを照合しステータスを更新
     def buy(self, buy_id):
         # お金が足りるか確認用
-        check = "select buy_price from buy where buy_id = '" + str(self.data_id[int(buy_id)]) + "'"  # 変更箇所
+        check = "select buy_price from buy where buy_id = '" + str(self.buys_id[int(buy_id)]) + "'"  # 変更箇所
         price = sql.query(self, check)[0]
         self.mother_fatigue -= 30
         if self.money - price < 0:
             return "(お金が足りない)"
         else:
-            text = "select * from buy where buy_id = '" + str(self.data_id[int(buy_id)]) + "'"  # 変更箇所
+            text = "select * from buy where buy_id = '" + str(self.buys_id[int(buy_id)]) + "'"  # 変更箇所
             result = sql.query(self, text)
             self.money -= price
             self.neet_motivation += result[3]
             self.buys.pop(int(buy_id))
+            self.buys_id.pop(int(buy_id))
             return "(" + result[1] + "をあげた)"
         # resultの表示でエラーが出たので、消去しました。
 
@@ -164,8 +174,13 @@ class player():
                 return "(疲れが溜まっていて、仕事に行かず寝てしまった)"
             else:  # 疲労度が一定以上の場合
                 self.mother_fatigue -= 50
-                self.money += 2000
-                return "(仕事に行ってきた)"
+                if self.count % 7 == 0:
+                    self.money += 10000
+                    self.mother_fatigue -= 50
+                    return "(仕事に行ってきた。今日はいつもより多く働いた)"
+                else:
+                    self.money += 2000
+                    return "(仕事に行ってきた・)"
         return "仕事に行く前に寝よう"
 
     # 寝たとき
@@ -174,10 +189,14 @@ class player():
             # ステータス(時間、疲労度)を更新
             self.time = True
             self.clean = False
-            self.mother_fatigue += 100
             self.count += 1
             self.neet_fulness -= 30
-            return "(ぐっすり眠れた)"
+            if self.count % 6 == 1:
+                self.mother_fatigue += 30
+                return "(あまり眠れなかった)"
+            else:
+                self.mother_fatigue += 100
+                return "(ぐっすり眠れた)"
         return "先に仕事を終わらせよう"
 
     # ニートの機嫌を確認
