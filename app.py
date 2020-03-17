@@ -106,8 +106,8 @@ def feed():
 def buy():
     # buy_idを取得しbuyメソッド呼び出し
     buy_id = request.args.get("buy_id")
-    player.buy(buy_id)
-    result="物を買ってあげた"
+    result=player.buy(buy_id)
+    #result="物を買ってあげた"
     # クリアしたとき別画面へ
     if player.check_neet():
         return render_template("end.html", money=player.money, time=player.time,
