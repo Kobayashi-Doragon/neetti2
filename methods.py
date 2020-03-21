@@ -1,6 +1,7 @@
 # 各メソッドを用意する用
 import sql
 import random
+from flask import Flask, render_template, request, make_response
 
 
 class player():
@@ -148,7 +149,6 @@ class player():
             self.foods.pop(int(food_id))
             self.foods_id.pop(int(food_id))
             return "(" + result[1] + "をあげた)"
-            # resultの表示でエラーが出たので、消去しました。
 
 
     # 物を買ってあげたとき
@@ -169,7 +169,6 @@ class player():
             self.buys.pop(int(buy_id))
             self.buys_id.pop(int(buy_id))
             return "(" + result[1] + "をあげた)"
-        # resultの表示でエラーが出たので、消去しました。
 
 
     # 仕事に行ったとき
@@ -188,7 +187,7 @@ class player():
                 return "(仕事に行ってきた。今日はいつもより多く働いた)"
             else:
                 self.money += 2000
-                return "(仕事に行ってきた・)"
+                return "(仕事に行ってきた)"
 
 
     # 寝たとき
@@ -212,3 +211,97 @@ class player():
             return True
         else:
             return False
+
+
+    # 各クライアントにcookieでゲームデータを保存する
+    def set_cookies(self, response):
+        response.set_cookie('player_id', value=str(self.player_id))
+        response.set_cookie('mother_fatigue', value=str(self.mother_fatigue))
+        response.set_cookie('money', value=str(self.money))
+        response.set_cookie('neet_fulness', value=str(self.neet_fulness))
+        response.set_cookie('neet_motivation', value=str(self.neet_motivation))
+        response.set_cookie('time', value=str(self.time))
+        response.set_cookie('count', value=str(self.count))
+
+        # 配列を","でつないだ文字列でcookieに保存
+        text=""
+        for i in range(len(self.foods)):
+            text += self.foods[i]['name'] + ','
+            text += str(self.foods[i]['price']) + ','
+        response.set_cookie('foods', value=text)
+        text = ""
+        for i in range(len(self.buys)):
+            text += self.buys[i]['name'] + ','
+            text += str(self.buys[i]['price']) + ','
+        response.set_cookie('buys', value=text)
+        text = ""
+        for i in range(len(self.talks)):
+            text += self.talks[i] + ','
+        response.set_cookie('talks', value=text)
+
+        response.set_cookie('foods_id', value=str(self.foods_id))
+        response.set_cookie('buys_id', value=str(self.buys_id))
+        response.set_cookie('talks_id', value=str(self.talks_id))
+        response.set_cookie('clean', value=str(self.clean))
+        return response
+
+
+    #　各クライアントからcookieでゲームデータを取得する
+    def get_cookies(self):
+        self.player_id = int(request.cookies.get('player_id', None))
+        self.mother_fatigue = int(request.cookies.get('mother_fatigue', None))
+        self.money = int(request.cookies.get('money', None))
+        self.neet_fulness = int(request.cookies.get('neet_fulness', None))
+        self.neet_motivation = int(request.cookies.get('neet_motivation', None))
+        if request.cookies.get('time', None) == 'True':
+            self.time = True
+        else:
+            self.time = False
+        self.count = int(request.cookies.get('count', None))
+
+        # ","で区切って配列に格納
+        self.foods.clear()
+        self.buys.clear()
+        self.talks.clear()
+        foods = request.cookies.get('foods', None)[:-1]
+        buys = request.cookies.get('buys', None)[:-1]
+        talks = request.cookies.get('talks', None)[:-1]
+        num = 0
+        for i in foods.split(','):
+            if num%2 == 0:
+                name = i
+                num += 1
+            else:
+                price = int(i)
+                self.foods.append({'name': name, 'price': price})
+                num += 1
+        num = 0
+        for i in buys.split(','):
+            if num % 2 == 0:
+                name = i
+                num += 1
+            else:
+                price = int(i)
+                self.buys.append({'name': name, 'price': price})
+                num += 1
+        for i in talks.split(','):
+            self.talks.append(i)
+
+        self.foods_id.clear()
+        self.buys_id.clear()
+        self.talks_id.clear()
+        foods_id = request.cookies.get('foods_id', None)[1:-1]
+        buys_id = request.cookies.get('buys_id', None)[1:-1]
+        talks_id = request.cookies.get('talks_id', None)[1:-1]
+        for i in foods_id.split(','):
+            self.foods_id.append(int(i))
+        for i in buys_id.split(','):
+            self.buys_id.append(int(i))
+        for i in talks_id.split(','):
+            self.talks_id.append(int(i))
+
+        if request.cookies.get('clean', None) == 'True':
+            self.clean = True
+        else:
+            self.clean = False
+        return True
