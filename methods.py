@@ -5,29 +5,52 @@ import random
 
 class player():
     # コンストラクタ
-    def __init__(self):
-        self.player_id = 0
-        self.mother_fatigue = 0
-        self.money = 1000
-        self.neet_fulness = 0
-        self.neet_motivation = 0
-        self.time = True
-        self.count = 1
+    def __init__(self,id=100000):
+        if id==100000:
+            self.player_id = 0
+            self.mother_fatigue = 0
+            self.money = 1000
+            self.neet_fulness = 0
+            self.neet_motivation = 0
+            self.time = True
+            self.count = 1
 
-        self.foods = []  # 表示する食事のリスト()
-        self.buys = []  # 表示する商品のリスト
-        self.talks = []
-        self.foods_id = []  # foods[i]のデータベース上のidがfoods_id[i]
-        self.buys_id = []
-        self.talks_id = []
+            self.foods = []  # 表示する食事のリスト()
+            self.buys = []  # 表示する商品のリスト
+            self.talks = []
+            self.foods_id = []  # foods[i]のデータベース上のidがfoods_id[i]
+            self.buys_id = []
+            self.talks_id = []
 
-        sql.connect(self)
-        self.clean = False
+            sql.connect(self)
+            self.clean = False
+        else:
+            self.player_id = id
+            sql.connect(self)
+            check ="select * from users where player_id = " + id
+            player_param = sql.query(self, check)
+            self.mother_fatigue = player_param[2]
+            self.money = player_param[3]
+            self.time = player_param[4]
+            self.neet_fulness = player_param[5]
+            self.neet_motivation = player_param[6]
+            self.count = player_param[7]
+
+            self.foods = []  # 表示する食事のリスト()
+            self.buys = []  # 表示する商品のリスト
+            self.talks = []
+            self.foods_id = []  # foods[i]のデータベース上のidがfoods_id[i]
+            self.buys_id = []
+            self.talks_id = []
+            self.update_data()
+
+            self.clean = False
+
 
     # データベースの値を表示するために取得(追加したメソッド)
     def update_data(self):
 
-        # random.seed(2 * self.count + self.time+int(self.player_id))
+        random.seed(2 * self.count + self.time+int(self.player_id))
         self.foods_id = random.sample(range(1, 31), 5)
         self.buys_id = random.sample(range(1, 31), 5)
         self.talks_id = random.sample(range(1, 31), 5)
@@ -54,7 +77,6 @@ class player():
             name = sql.query(self, check)
             self.talks.append(name[0])
 
-
     # 入力を元にログインしてゲーム画面に
     def login(self, id, password):
         # DBと入力を照合(true or false)
@@ -80,7 +102,6 @@ class player():
         else:
             return False
 
-
     # 入力を元にアカウントの作成
     def create(self, id, password):
         text = "select exists(select * from users where player_id = " + id + ");"
@@ -96,7 +117,6 @@ class player():
             self.player_id = id
             return True
 
-
     # ステータスをDBに格納
     def save(self):
         if self.time:
@@ -105,13 +125,12 @@ class player():
             time_bool = "False"
 
         # selfのステータスをDBに格納
-        text = "update users set mother_fatigue=" + str(self.mother_fatigue) + ",money=" +\
-               str(self.money) + ",time='"+ time_bool +"',neet_fulness=" + str(self.neet_fulness) +\
-               ",neet_motivation=" + str(self.neet_motivation) + ",count=" + str(self.count) +\
+        text = "update users set mother_fatigue=" + str(self.mother_fatigue) + ",money=" + \
+               str(self.money) + ",time='" + time_bool + "',neet_fulness=" + str(self.neet_fulness) + \
+               ",neet_motivation=" + str(self.neet_motivation) + ",count=" + str(self.count) + \
                " where player_id=" + str(self.player_id) + ";"
         sql.add(self, text)
         return True
-
 
     # 話しかけたとき
     def talk(self, talk_id):
@@ -127,7 +146,6 @@ class player():
             self.talks.pop(int(talk_id))
             self.talks_id.pop(int(talk_id))
             return result[2][rand_int]
-
 
     # 食事を与えたとき
     def feed(self, food_id):
@@ -150,7 +168,6 @@ class player():
             return "(" + result[1] + "をあげた)"
             # resultの表示でエラーが出たので、消去しました。
 
-
     # 物を買ってあげたとき
     def buy(self, buy_id):
         # お金が足りるか確認用
@@ -171,7 +188,6 @@ class player():
             return "(" + result[1] + "をあげた)"
         # resultの表示でエラーが出たので、消去しました。
 
-
     # 仕事に行ったとき
     def work(self):
         # ステータス(時間、疲労度、お金)を更新
@@ -190,7 +206,6 @@ class player():
                 self.money += 2000
                 return "(仕事に行ってきた・)"
 
-
     # 寝たとき
     def sleep(self):
         # ステータス(時間、疲労度)を更新
@@ -204,7 +219,6 @@ class player():
         else:
             self.mother_fatigue += 100
             return "(ぐっすり眠れた)"
-
 
     # ニートの機嫌を確認
     def check_neet(self):

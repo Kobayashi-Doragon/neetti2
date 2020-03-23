@@ -33,7 +33,7 @@
         </div>
 
     <!-- ドアの画像-->
-        <img src="static/image/door.jpg" class="door-image">
+        <img src="{{ url_for('static', filename='image/door.jpg') }}" class="door-image">
 
     <!-- ステータス(日にち、時間、所持金)-->
         <div class="state-box">
@@ -59,12 +59,12 @@
         <div class="confi-box">
             <ul class="confi-list">
                 <li>
-                    <form action="/save">
+                    <form action="/save/{{ player_id }}">
                     <input type="submit" value="セーブ" class="confi-button" id="save">
                     </form>
                 </li>
                 <li>
-                    <form action="/logout">
+                    <form action="/logout/{{ player_id }}">
                         <input type="submit" value="ログアウト" class="confi-button" id="logout">
                     </form>
                 </li>
@@ -86,18 +86,18 @@
                 <li>
                     <input type="submit" value="話す" class="action-button" id="talk">
                 </li>
-                <form action="/clean">
+                <form action="/clean/{{ player_id }}">
                     <li>
                         <input type="submit" value="掃除" class="action-button" id="clean">
                     </li>
                  </form>
                 <li>
                     {% if time==True %}
-                        <form action="/work_sleep">
+                        <form action="/work_sleep/{{ player_id }}">
                             <input type="submit" value="仕事にいく" class="action-button" id="work">
                         </form>
                     {% elif time==False %}
-                        <form action="/work_sleep">
+                        <form action="/work_sleep/{{ player_id }}">
                             <input type="submit" value="寝る" class="action-button" id="sleep">
                         </form>
                     {% endif %}
@@ -107,7 +107,7 @@
 
     <!-- 行動選択後の選択肢-->
         <div class="action-select-box">
-            <form action="/feed">
+            <form action="/feed/{{ player_id }}">
                 <select name="food_id" id="food-select" class="select-list" size="{{ (foods|length) + 1 }}">
                     {% for i in range(foods|length) %}
                         <option value="{{ i }}" class="food-option">{{ foods[i]['name'] }}({{ foods[i]['price'] }}円)</option>
@@ -116,7 +116,7 @@
                 </select>
                 <input type="submit" value="確定" class="submit-button" id="food-button">
             </form>
-            <form action="/buy">
+            <form action="/buy/{{ player_id }}">
                 <select name="buy_id" id="buy-select" class="select-list" size="{{ (buys|length) + 1 }}">
                    {% for i in range(buys|length) %}
                         <option value="{{ i }}" class="buy-option">{{ buys[i]['name'] }}({{buys[i]['price']}}円)</option>
@@ -125,7 +125,7 @@
                 </select>
                 <input type="submit" value="確定" class="submit-button" id="buy-button">
             </form>
-            <form action="/talk">
+            <form action="/talk/{{ player_id }}">
                 <select name="talk_id" id="talk-select" class="select-list"  size="{{ (talks|length) + 1 }}">
                     {% for i in range(talks|length) %}
                         <option value="{{ i }}" class="talk-option">{{talks[i]}}</option>
